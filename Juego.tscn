@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://btfes7gv5do00"]
+[gd_scene load_steps=7 format=3 uid="uid://btfes7gv5do00"]
 
 [ext_resource type="FontFile" uid="uid://bsg7t5g7b0kqv" path="res://Gosrokan.otf" id="1_3pr6r"]
 [ext_resource type="Script" path="res://Actividad-Juego.gd" id="1_da1sb"]
@@ -7,6 +7,9 @@
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0fdd4"]
 radius = 32.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_i1qxn"]
+radius = 80.0
 
 [node name="Juego" type="Node2D"]
 script = ExtResource("1_da1sb")
@@ -23,7 +26,7 @@ script = ExtResource("3_qk7os")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Jugador"]
 shape = SubResource("CircleShape2D_0fdd4")
 
-[node name="Sprite2D" type="Sprite2D" parent="Jugador/CollisionShape2D"]
+[node name="ActorJug" type="Sprite2D" parent="Jugador/CollisionShape2D"]
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("3_7np3h")
 
@@ -45,3 +48,15 @@ offset_bottom = 35.0
 theme_override_fonts/font = ExtResource("1_3pr6r")
 theme_override_font_sizes/font_size = 24
 text = "Tiempo"
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(536, 152)
+metadata/_edit_group_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_i1qxn")
+
+[node name="Sprite2D" type="Sprite2D" parent="Area2D/CollisionShape2D"]
+texture = ExtResource("3_7np3h")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

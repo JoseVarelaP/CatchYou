@@ -1,5 +1,6 @@
 extends Node2D
 var tiempoTotal = 0
+var lostGame = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -18,8 +19,16 @@ func ProcesaTiempo(sec):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	if( lostGame ):
+		return
+		
 	# Suma el tiempo actual a lo que esta.
 	tiempoTotal += delta
 	# Actualiza el tiempo total en la pantalla.
 	$"TiempoActual".set_text( ProcesaTiempo(tiempoTotal) )
-	pass
+
+func _on_area_2d_body_entered(body):
+	print("weeee")
+	if( body == $Jugador ):
+		lostGame = true
+		$Jugador.setAllowedToMove(false)
