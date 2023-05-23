@@ -1,0 +1,112 @@
+[gd_scene load_steps=7 format=3 uid="uid://dsg83rfsde2wp"]
+
+[ext_resource type="FontFile" uid="uid://bsg7t5g7b0kqv" path="res://Gosrokan.otf" id="1_f4k7f"]
+[ext_resource type="Script" path="res://Menu.gd" id="1_o1v4t"]
+[ext_resource type="FontFile" uid="uid://d2h5j1c762v7o" path="res://UbuntuMono-R.ttf" id="3_qxyx6"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_sxe1q"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ru0rw"]
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6avqe"]
+bg_color = Color(0.207843, 0.694118, 0.533333, 1)
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+corner_radius_bottom_right = 20
+corner_radius_bottom_left = 20
+
+[node name="mainMenu" type="Node2D"]
+script = ExtResource("1_o1v4t")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 800.0
+offset_bottom = 600.0
+color = Color(0.239216, 0.239216, 0.239216, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+offset_right = 800.0
+offset_bottom = 600.0
+theme_override_constants/margin_left = 90
+theme_override_constants/margin_right = 90
+
+[node name="Contenido Juego" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/Contenido Juego"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/font = ExtResource("1_f4k7f")
+theme_override_font_sizes/font_size = 128
+text = "Titulo Aqui"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Contenido Juego"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 0.57
+theme_override_constants/separation = 20
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Contenido Juego/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
+
+[node name="InicioJuego" type="Button" parent="MarginContainer/Contenido Juego/VBoxContainer/MarginContainer"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("1_f4k7f")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/normal = SubResource("StyleBoxFlat_sxe1q")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ru0rw")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_6avqe")
+text = "Nuevo Juego"
+
+[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/Contenido Juego/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_right = 50
+
+[node name="Salir" type="Button" parent="MarginContainer/Contenido Juego/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+focus_mode = 0
+theme_override_fonts/font = ExtResource("1_f4k7f")
+theme_override_font_sizes/font_size = 60
+theme_override_styles/normal = SubResource("StyleBoxFlat_sxe1q")
+theme_override_styles/hover = SubResource("StyleBoxFlat_ru0rw")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_6avqe")
+text = "Salir
+"
+
+[node name="Copyright" type="VBoxContainer" parent="MarginContainer/Contenido Juego"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="InfoCR" type="Label" parent="MarginContainer/Contenido Juego/Copyright"]
+layout_mode = 2
+text = "2023, Jose_Varela"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label" type="Label" parent="."]
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 130.0
+offset_bottom = 34.0
+theme_override_fonts/font = ExtResource("3_qxyx6")
+theme_override_font_sizes/font_size = 23
+text = "Tiempo record: "
+
+[connection signal="button_up" from="MarginContainer/Contenido Juego/VBoxContainer/MarginContainer/InicioJuego" to="." method="_on_inicio_juego_button_up"]
+[connection signal="button_up" from="MarginContainer/Contenido Juego/VBoxContainer/MarginContainer2/Salir" to="." method="_on_salir_button_up"]
