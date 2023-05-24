@@ -1,24 +1,12 @@
-extends Node
+class_name TiempoCalc
 
-var save_data = {
-	"score": 0,
-	"name": "NAME"
-}
-
-
-func save():
-	var cfgFile = File.new()
-	cfgFile.open("user://save.cfg", File.WRITE)
-	cfgFile.store_line(to_json(save_data))
-	cfgFile.close()
-
-func load():
-	var cfgFile = File.new()
-	if not cfgFile.fileExists("user://save.cfg", File.READ)
-		save()
-		return
-	cfgFile.open("user://save.cfg", File.READ)
-	var data = parse_json(cfgFile.get_as_text())
-
-	save_data.score = data.score
-	save_data.name = data.name
+func ProcesaTiempo(sec):
+	var seconds = int(sec)%60
+	var minutes = (int(sec)/60)%60
+	var hours = (int(sec)/60)/60
+	var milisec = int(sec*1000) % 1000
+	
+	if( sec >= 3600 ):
+		return "%02d:%02d:%02d.%03d" % [hours, minutes, seconds, milisec]
+	
+	return "%02d:%02d.%03d" % [minutes, seconds, milisec]

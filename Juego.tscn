@@ -33,25 +33,6 @@ shape = SubResource("CircleShape2D_0fdd4")
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("3_7np3h")
 
-[node name="TiempoActual" type="Label" parent="."]
-offset_left = 8.0
-offset_top = 35.0
-offset_right = 173.0
-offset_bottom = 80.0
-theme_override_fonts/font = ExtResource("1_3pr6r")
-theme_override_font_sizes/font_size = 42
-text = "00:00.00
-"
-
-[node name="Etiqueta-Tiempo" type="Label" parent="."]
-offset_left = 8.0
-offset_top = 8.0
-offset_right = 88.0
-offset_bottom = 35.0
-theme_override_fonts/font = ExtResource("1_3pr6r")
-theme_override_font_sizes/font_size = 24
-text = "Tiempo"
-
 [node name="Colision" type="Area2D" parent="."]
 position = Vector2(536, 152)
 metadata/_edit_group_ = true
@@ -62,8 +43,42 @@ shape = SubResource("CircleShape2D_i1qxn")
 [node name="Sprite2D" type="Sprite2D" parent="Colision/CollisionShape2D"]
 texture = ExtResource("3_7np3h")
 
-[node name="Interfaz-Perdiste" type="MarginContainer" parent="."]
+[node name="FondoPerdida" type="ColorRect" parent="."]
 visible = false
+offset_right = 800.0
+offset_bottom = 600.0
+color = Color(0.12549, 0.12549, 0.12549, 0.709804)
+
+[node name="Interfaz" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TiempoActual" type="Label" parent="Interfaz"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 35.0
+offset_right = 173.0
+offset_bottom = 80.0
+theme_override_fonts/font = ExtResource("1_3pr6r")
+theme_override_font_sizes/font_size = 42
+text = "00:00.00
+"
+
+[node name="Etiqueta-Tiempo" type="Label" parent="Interfaz"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 88.0
+offset_bottom = 35.0
+theme_override_fonts/font = ExtResource("1_3pr6r")
+theme_override_font_sizes/font_size = 24
+text = "Tiempo"
+
+[node name="Perdiste" type="MarginContainer" parent="Interfaz"]
+visible = false
+layout_mode = 0
 offset_right = 800.0
 offset_bottom = 600.0
 theme_override_constants/margin_left = 90
@@ -71,10 +86,10 @@ theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 90
 theme_override_constants/margin_bottom = 50
 
-[node name="Contenido Juego" type="VBoxContainer" parent="Interfaz-Perdiste"]
+[node name="Contenido Juego" type="VBoxContainer" parent="Interfaz/Perdiste"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="Interfaz-Perdiste/Contenido Juego"]
+[node name="Label" type="Label" parent="Interfaz/Perdiste/Contenido Juego"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/font = ExtResource("1_3pr6r")
@@ -83,19 +98,19 @@ text = "Te dieron!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Interfaz-Perdiste/Contenido Juego"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Interfaz/Perdiste/Contenido Juego"]
 layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.57
 theme_override_constants/separation = 20
 
-[node name="MarginContainer" type="MarginContainer" parent="Interfaz-Perdiste/Contenido Juego/VBoxContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="Interfaz/Perdiste/Contenido Juego/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_left = 50
 theme_override_constants/margin_right = 50
 
-[node name="Reiniciar" type="Button" parent="Interfaz-Perdiste/Contenido Juego/VBoxContainer/MarginContainer"]
+[node name="Reiniciar" type="Button" parent="Interfaz/Perdiste/Contenido Juego/VBoxContainer/MarginContainer"]
 layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("1_3pr6r")
@@ -105,13 +120,13 @@ theme_override_styles/hover = ExtResource("6_xcimn")
 theme_override_styles/pressed = ExtResource("7_7dofc")
 text = "Reiniciar"
 
-[node name="MarginContainer2" type="MarginContainer" parent="Interfaz-Perdiste/Contenido Juego/VBoxContainer"]
+[node name="MarginContainer2" type="MarginContainer" parent="Interfaz/Perdiste/Contenido Juego/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_constants/margin_left = 50
 theme_override_constants/margin_right = 50
 
-[node name="Salir" type="Button" parent="Interfaz-Perdiste/Contenido Juego/VBoxContainer/MarginContainer2"]
+[node name="Salir" type="Button" parent="Interfaz/Perdiste/Contenido Juego/VBoxContainer/MarginContainer2"]
 layout_mode = 2
 focus_mode = 0
 theme_override_fonts/font = ExtResource("1_3pr6r")
@@ -122,6 +137,9 @@ theme_override_styles/pressed = ExtResource("7_7dofc")
 text = "Regresar a menu
 "
 
+[node name="Container" type="Container" parent="Interfaz/Perdiste/Contenido Juego/VBoxContainer"]
+layout_mode = 2
+
 [connection signal="body_entered" from="Colision" to="." method="_on_area_2d_body_entered"]
-[connection signal="button_up" from="Interfaz-Perdiste/Contenido Juego/VBoxContainer/MarginContainer/Reiniciar" to="." method="_on_reiniciar_button_up"]
-[connection signal="button_up" from="Interfaz-Perdiste/Contenido Juego/VBoxContainer/MarginContainer2/Salir" to="." method="_on_salir_button_up"]
+[connection signal="button_up" from="Interfaz/Perdiste/Contenido Juego/VBoxContainer/MarginContainer/Reiniciar" to="." method="_on_reiniciar_button_up"]
+[connection signal="button_up" from="Interfaz/Perdiste/Contenido Juego/VBoxContainer/MarginContainer2/Salir" to="." method="_on_salir_button_up"]

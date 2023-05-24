@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://dsg83rfsde2wp"]
+[gd_scene load_steps=6 format=3 uid="uid://dsg83rfsde2wp"]
 
 [ext_resource type="FontFile" uid="uid://bsg7t5g7b0kqv" path="res://Gosrokan.otf" id="1_f4k7f"]
 [ext_resource type="Script" path="res://Menu.gd" id="1_o1v4t"]
-[ext_resource type="FontFile" uid="uid://d2h5j1c762v7o" path="res://UbuntuMono-R.ttf" id="3_qxyx6"]
 [ext_resource type="StyleBox" uid="uid://tqtcfqm07ue8" path="res://EST-Boton.tres" id="3_w3oud"]
 [ext_resource type="StyleBox" uid="uid://pdto5gafe0tl" path="res://EST-BotonHover.tres" id="4_r3ewd"]
 [ext_resource type="StyleBox" uid="uid://cgy7vdqjw3tj" path="res://EST-BotonPresionado.tres" id="5_ehx57"]
@@ -82,14 +81,25 @@ text = "2023, Jose_Varela"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Label" type="Label" parent="."]
+[node name="TiempoRecord" type="Label" parent="."]
+offset_left = 8.0
+offset_top = 35.0
+offset_right = 173.0
+offset_bottom = 80.0
+theme_override_fonts/font = ExtResource("1_f4k7f")
+theme_override_font_sizes/font_size = 42
+text = "00:00.00
+"
+
+[node name="Etiqueta-Tiempo" type="Label" parent="."]
 offset_left = 8.0
 offset_top = 8.0
-offset_right = 130.0
-offset_bottom = 34.0
-theme_override_fonts/font = ExtResource("3_qxyx6")
-theme_override_font_sizes/font_size = 23
-text = "Tiempo record: "
+offset_right = 88.0
+offset_bottom = 35.0
+theme_override_fonts/font = ExtResource("1_f4k7f")
+theme_override_font_sizes/font_size = 24
+text = "Tiempo Record:"
 
 [connection signal="button_up" from="MarginContainer/Contenido Juego/VBoxContainer/MarginContainer/InicioJuego" to="." method="_on_inicio_juego_button_up"]
 [connection signal="button_up" from="MarginContainer/Contenido Juego/VBoxContainer/MarginContainer2/Salir" to="." method="_on_salir_button_up"]
+[connection signal="ready" from="TiempoRecord" to="." method="_on_tiempo_record_ready"]
