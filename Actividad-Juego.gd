@@ -8,7 +8,6 @@ var UltimoTiempo = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	#Etiqueta-Tiempo
 	UltimoTiempo = saveFile.load()
 	pass # Replace with function body.
 	
@@ -38,7 +37,6 @@ func _on_area_2d_body_entered(body):
 	print("[Actividad-Juego] Jugador - Colision con kill trigger")
 	if( body == $Jugador ):
 		actionLoseGame()
-
 
 func _on_reiniciar_button_up():
 	# Recarga los elementos y reinicia la partida.

@@ -1,13 +1,10 @@
 extends CharacterBody2D
 
 const SPEED = 300.0
-const JUMP_VELOCITY = -400.0
 var speedDelta = {"y": 0.0, "x": 0.0}
 
-# Get the gravity from the project settings to be synced with RigidBody nodes.
-var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
-const width_area = 800
-const height_area = 600
+var width_area = ProjectSettings.get_setting("display/window/size/viewport_width")
+var height_area = ProjectSettings.get_setting("display/window/size/viewport_height")
 const border_margin = 30
 const speedSlowdownForPlayer = 350
 var allowedToMove = true
@@ -29,17 +26,7 @@ func CheckBoundries():
 var lastPos = [0,0]
 func _physics_process(delta):
 	if( not allowedToMove ):
-		return
-		
-	# Add the gravity.
-	"""
-	if not is_on_floor():
-		velocity.y += gravity * delta
-
-	# Handle Jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
-	"""
+		return	
 	
 	var vertdir = Input.get_axis("ui_up", "ui_down")
 	if vertdir:

@@ -15,7 +15,6 @@ func load():
 		save(0)
 		return 0
 	var cfgFile = FileAccess.open("user://save_game.dat", FileAccess.READ)
-	# print(cfgFile.get_as_text())
 	var data = float(cfgFile.get_as_text())
 	
 	return data
