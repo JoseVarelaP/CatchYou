@@ -19,3 +19,6 @@ func _on_tiempo_record_ready():
 		return
 		
 	$TiempoRecord.set_text( Tiempo.ProcesaTiempo( achievedScore ) )
+
+func _on_inicio_juego_pressed():
+	_on_inicio_juego_button_up()
