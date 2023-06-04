@@ -9,7 +9,7 @@ const border_margin = 30
 const speedSlowdownForPlayer = 350
 var allowedToMove = true
 
-func setAllowedToMove(state):
+func setAllowedToMove(state : bool):
 	allowedToMove = state
 	
 func CheckBoundries():
@@ -22,6 +22,7 @@ func CheckBoundries():
 		position.x = width_area - border_margin
 	if position.y > height_area - border_margin:
 		position.y = height_area - border_margin
+	
 
 var lastPos = [0,0]
 func _physics_process(delta):

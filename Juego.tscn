@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://btfes7gv5do00"]
+[gd_scene load_steps=13 format=3 uid="uid://btfes7gv5do00"]
 
 [ext_resource type="FontFile" uid="uid://bsg7t5g7b0kqv" path="res://Gosrokan.otf" id="1_3pr6r"]
 [ext_resource type="Script" path="res://Actividad-Juego.gd" id="1_da1sb"]
@@ -7,56 +7,95 @@
 [ext_resource type="StyleBox" uid="uid://tqtcfqm07ue8" path="res://EST-Boton.tres" id="5_2ftbi"]
 [ext_resource type="StyleBox" uid="uid://pdto5gafe0tl" path="res://EST-BotonHover.tres" id="6_xcimn"]
 [ext_resource type="StyleBox" uid="uid://cgy7vdqjw3tj" path="res://EST-BotonPresionado.tres" id="7_7dofc"]
+[ext_resource type="Script" path="res://Enem1.gd" id="8_mqcaw"]
+
+[sub_resource type="TileSet" id="TileSet_ebaq8"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0fdd4"]
 radius = 32.0
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_i1qxn"]
-radius = 80.0
+[sub_resource type="CircleShape2D" id="CircleShape2D_n5loj"]
+radius = 40.05
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ov3bv"]
 
 [node name="Juego" type="Node2D"]
 script = ExtResource("1_da1sb")
 
+[node name="GridMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_ebaq8")
+format = 2
+
 [node name="Fondo" type="ColorRect" parent="."]
+offset_left = -1480.0
+offset_top = -896.0
+offset_right = -680.0
+offset_bottom = -296.0
+scale = Vector2(4.76, 4.76)
+color = Color(0.239216, 0.239216, 0.239216, 1)
+metadata/_edit_lock_ = true
+
+[node name="ReferenceRect" type="ReferenceRect" parent="."]
 offset_right = 800.0
 offset_bottom = 600.0
-color = Color(0.239216, 0.239216, 0.239216, 1)
+border_color = Color(1, 1, 1, 1)
+border_width = 5.0
+editor_only = false
 
 [node name="Jugador" type="CharacterBody2D" parent="."]
 position = Vector2(384, 320)
 script = ExtResource("3_qk7os")
+metadata/_edit_group_ = true
+
+[node name="Camera2D" type="Camera2D" parent="Jugador"]
+position_smoothing_enabled = true
+position_smoothing_speed = 10.0
+metadata/_edit_lock_ = true
+
+[node name="DBGPos" type="Label" parent="Jugador"]
+offset_left = -24.0
+offset_top = -56.0
+offset_right = 35.0
+offset_bottom = -30.0
+text = "therehr"
+metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Jugador"]
 shape = SubResource("CircleShape2D_0fdd4")
+metadata/_edit_lock_ = true
 
 [node name="ActorJug" type="Sprite2D" parent="Jugador/CollisionShape2D"]
 scale = Vector2(0.4, 0.4)
 texture = ExtResource("3_7np3h")
+metadata/_edit_lock_ = true
 
-[node name="Colision" type="Area2D" parent="."]
-position = Vector2(536, 152)
+[node name="Enem1" type="CharacterBody2D" parent="."]
+position = Vector2(104, 158)
+script = ExtResource("8_mqcaw")
 metadata/_edit_group_ = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Colision"]
-shape = SubResource("CircleShape2D_i1qxn")
+[node name="Area2D" type="Area2D" parent="Enem1"]
 
-[node name="Sprite2D" type="Sprite2D" parent="Colision/CollisionShape2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enem1/Area2D"]
+shape = SubResource("CircleShape2D_n5loj")
+
+[node name="spr" type="Sprite2D" parent="Enem1"]
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("3_7np3h")
+metadata/_edit_lock_ = true
 
-[node name="FondoPerdida" type="ColorRect" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Enem1"]
+shape = SubResource("RectangleShape2D_ov3bv")
+
+[node name="Interfaz" type="CanvasLayer" parent="."]
+
+[node name="FondoPerdida" type="ColorRect" parent="Interfaz"]
 visible = false
 offset_right = 800.0
 offset_bottom = 600.0
 color = Color(0.12549, 0.12549, 0.12549, 0.709804)
 
-[node name="Interfaz" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
 [node name="TiempoActual" type="Label" parent="Interfaz"]
-layout_mode = 0
 offset_left = 8.0
 offset_top = 35.0
 offset_right = 173.0
@@ -67,7 +106,6 @@ text = "00:00.00
 "
 
 [node name="Etiqueta-Tiempo" type="Label" parent="Interfaz"]
-layout_mode = 0
 offset_left = 8.0
 offset_top = 8.0
 offset_right = 88.0
@@ -78,7 +116,6 @@ text = "Tiempo"
 
 [node name="Perdiste" type="MarginContainer" parent="Interfaz"]
 visible = false
-layout_mode = 0
 offset_right = 800.0
 offset_bottom = 600.0
 theme_override_constants/margin_left = 90
@@ -140,6 +177,6 @@ text = "Regresar a menu
 [node name="Container" type="Container" parent="Interfaz/Perdiste/Contenido Juego/VBoxContainer"]
 layout_mode = 2
 
-[connection signal="body_entered" from="Colision" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="Enem1/Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="button_up" from="Interfaz/Perdiste/Contenido Juego/VBoxContainer/MarginContainer/Reiniciar" to="." method="_on_reiniciar_button_up"]
 [connection signal="button_up" from="Interfaz/Perdiste/Contenido Juego/VBoxContainer/MarginContainer2/Salir" to="." method="_on_salir_button_up"]

@@ -14,7 +14,7 @@ func _on_salir_button_up():
 	get_tree().quit()
 
 func _on_tiempo_record_ready():
-	var achievedScore = saveFile.load()
+	var achievedScore = saveFile.loadfile()
 	if achievedScore == null:
 		return
 		

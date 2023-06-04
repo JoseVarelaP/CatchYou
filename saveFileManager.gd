@@ -9,7 +9,7 @@ func save( totalTime = 0, savedTime = 0 ):
 	cfgFile.store_string("%s" % totalTime)
 	cfgFile.close()
 
-func load():
+func loadfile() -> float:
 	if not FileAccess.file_exists("user://save_game.dat"):
 		print("No se encontro el archivo, creando...")
 		save(0)

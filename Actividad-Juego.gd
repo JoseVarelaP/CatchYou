@@ -8,18 +8,22 @@ var UltimoTiempo = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	UltimoTiempo = saveFile.load()
-	pass # Replace with function body.
+	UltimoTiempo = saveFile.loadfile()
+	
+func getPlayerTilePosition() -> Vector2i:
+	var pos = $GridMap.local_to_map( $Jugador.global_position ) as Vector2i
+	return pos
 	
 func actionLoseGame():
 	# Marca el juego como terminado, para evitar que el jugador y los elementos sean
 	# actualizados.
 	lostGame = true
 	$Jugador.setAllowedToMove(false)
+	$Enem1.setMove(false)
 	
 	# Muestra la interfaz.
 	$Interfaz/Perdiste.set_visible(true)
-	$FondoPerdida.set_visible(true)
+	$Interfaz/FondoPerdida.set_visible(true)
 	
 	saveFile.save(tiempoTotal, UltimoTiempo)
 
@@ -27,6 +31,9 @@ func actionLoseGame():
 func _process(delta):
 	if( lostGame ):
 		return
+		
+	var pos = getPlayerTilePosition()
+	$Jugador/DBGPos.set_text( "%d,%d" % [pos.x,pos.y] )
 		
 	# Suma el tiempo actual a lo que esta.
 	tiempoTotal += delta

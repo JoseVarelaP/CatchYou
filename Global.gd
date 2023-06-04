@@ -1,6 +1,6 @@
 class_name TiempoCalc
 
-func ProcesaTiempo(sec):
+func ProcesaTiempo(sec) -> String:
 	var seconds = int(sec)%60
 	var minutes = (int(sec)/60)%60
 	var hours = (int(sec)/60)/60
