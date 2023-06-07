@@ -1,3 +1,11 @@
 player_hit:
-Damage Sound effect - Raclure
+Damage Sound effect by Raclure of Freesound.org
 https://freesound.org/people/Raclure/sounds/458867/#
+
+highscore:
+"UI Confirmation Alert, D1.wav" by InspectorJ (www.jshaw.co.uk) of Freesound.org
+https://freesound.org/people/InspectorJ/sounds/413749/
+
+level-up:
+Game Powerup by Jofae of Freesound.org
+https://freesound.org/people/Jofae/sounds/368651/
