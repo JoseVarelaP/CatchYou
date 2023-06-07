@@ -1,0 +1,3 @@
+player_hit:
+Damage Sound effect - Raclure
+https://freesound.org/people/Raclure/sounds/458867/#

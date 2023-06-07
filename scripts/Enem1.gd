@@ -1,3 +1,9 @@
+"""
+Enemigo 1
+
+Simplemente realiza un calculo de normalización hacia la dirección del jugador.
+"""
+
 extends CharacterBody2D
 
 var speed = 80

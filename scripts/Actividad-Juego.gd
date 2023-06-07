@@ -1,14 +1,33 @@
 extends Node2D
-var tiempoTotal = 0
-var lostGame = false
 
-var saveFile = saveFileManager.new()
-var Tiempo = TiempoCalc.new()
-var UltimoTiempo = 0
+@export var ShakeStrength: float = 30.0
+@export var ShakeDecay: float = 5.0
+
+@onready var camera = $Jugador/Camera2D
+@onready var rand = RandomNumberGenerator.new()
+
+var curShakeStrength: float = 0.0
+
+var tiempoTotal: float = 0.0
+var lostGame: bool = false
+
+var saveFile: saveFileManager = saveFileManager.new()
+var Tiempo: TiempoCalc = TiempoCalc.new()
+var UltimoTiempo: float = 0.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	rand.randomize()
 	UltimoTiempo = saveFile.loadfile()
+	
+func applyShake():
+	curShakeStrength = ShakeStrength
+	
+func getRandomCameraOffset() -> Vector2:
+	return Vector2(
+		rand.randf_range(-curShakeStrength, curShakeStrength),
+		rand.randf_range(-curShakeStrength, curShakeStrength)
+	)
 	
 func getPlayerTilePosition() -> Vector2i:
 	var pos = $GridMap.local_to_map( $Jugador.global_position ) as Vector2i
@@ -20,6 +39,7 @@ func actionLoseGame():
 	lostGame = true
 	$Jugador.setAllowedToMove(false)
 	$Enem1.setMove(false)
+	applyShake()
 	
 	# Muestra la interfaz.
 	$Interfaz/Perdiste.set_visible(true)
@@ -28,7 +48,11 @@ func actionLoseGame():
 	saveFile.save(tiempoTotal, UltimoTiempo)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(delta: float):
+	if( curShakeStrength > 0.0 ):
+		curShakeStrength = lerp(curShakeStrength, 0.0, ShakeDecay * delta)
+		camera.offset = getRandomCameraOffset()
+	
 	if( lostGame ):
 		return
 		
@@ -50,4 +74,4 @@ func _on_reiniciar_button_up():
 	get_tree().reload_current_scene()
 
 func _on_salir_button_up():
-	get_tree().change_scene_to_file("res://main_menu.tscn")
+	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")

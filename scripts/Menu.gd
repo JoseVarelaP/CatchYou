@@ -7,7 +7,7 @@ var Tiempo = TiempoCalc.new()
 
 func _on_inicio_juego_button_up():
 	print("[MainMenu] Cambiando escena")
-	get_tree().change_scene_to_file("res://Juego.tscn")
+	get_tree().change_scene_to_file("res://scenes/Juego.tscn")
 
 func _on_salir_button_up():
 	print("Saliendo")
