@@ -16,6 +16,11 @@ config/features=PackedStringArray("4.0", "Mobile")
 boot_splash/show_image=false
 config/icon="res://img/icon.svg"
 
+[autoload]
+
+GlobalAudio="*res://scenes/global_audio.tscn"
+GlobalVars="*res://scripts/GlobalVars.gd"
+
 [display]
 
 window/size/viewport_width=800

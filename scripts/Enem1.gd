@@ -11,13 +11,13 @@ var speed = SPEED_BASE
 @onready var p = $"../Jugador"
 var hasToMove = true
 
-func setMove(state : bool):
+func setMove(state : bool) -> void:
 	hasToMove = state
 	
-func changeSpeed(level: float):
+func changeSpeed(level: float) -> void:
 	speed = SPEED_BASE * level
 
-func _physics_process(_delta):
+func _physics_process(_delta) -> void:
 	if not hasToMove:
 		return
 	

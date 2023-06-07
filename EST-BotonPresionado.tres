@@ -2,6 +2,7 @@
 
 [resource]
 bg_color = Color(0.207843, 0.694118, 0.533333, 1)
+skew = Vector2(0.25, 2.08165e-12)
 corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20

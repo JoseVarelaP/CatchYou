@@ -1,6 +1,7 @@
 [gd_resource type="StyleBoxFlat" format=3 uid="uid://pdto5gafe0tl"]
 
 [resource]
+skew = Vector2(0.25, 2.08165e-12)
 corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20

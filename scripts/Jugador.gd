@@ -5,37 +5,37 @@ const accel: float = 1500
 const friction: int = 600
 var speedDelta: Vector2 = Vector2(0.0,0.0)
 
-@onready var hitSound = $hitPlayer
+@onready var hitSound: AudioStreamPlayer = $hitPlayer
 
-var width_area = ProjectSettings.get_setting("display/window/size/viewport_width")
-var height_area = ProjectSettings.get_setting("display/window/size/viewport_height")
-const border_margin = 30
+const border_margin: float = 30
 var allowedToMove = true
 
-func setAllowedToMove(state : bool):
+func setAllowedToMove(state : bool) -> void:
 	allowedToMove = state
 	if( !state ):
 		hitSound.play()
 	
-func CheckBoundries():
+func CheckBoundries() -> void:
 	# Declara limites de posición para que no se salga de la pantalla.
 	if position.x < border_margin:
 		position.x = border_margin
 	if position.y < border_margin:
 		position.y = border_margin
-	if position.x > width_area - border_margin:
-		position.x = width_area - border_margin
-	if position.y > height_area - border_margin:
-		position.y = height_area - border_margin
+	if position.x > GlobalVars.areaForPlayer.x - border_margin:
+		position.x = GlobalVars.areaForPlayer.x - border_margin
+	if position.y > GlobalVars.areaForPlayer.y - border_margin:
+		position.y = GlobalVars.areaForPlayer.y - border_margin
 
 var input: Vector2 = Vector2(0,0)
 func getInputMovement() -> Vector2:
 	var vecVel = Input.get_vector("move_left", "move_right", "move_up", "move_down") as Vector2
 	return vecVel.normalized()
 		
-func _physics_process(delta):
+func _physics_process(delta: float):
 	if( not allowedToMove ):
-		return	
+		return
+		
+	print_debug(GlobalVars.areaForPlayer)
 
 	input = getInputMovement()
 	
