@@ -6,6 +6,8 @@ const friction: int = 600
 var speedDelta: Vector2 = Vector2(0.0,0.0)
 
 @onready var hitSound: AudioStreamPlayer = $hitPlayer
+@onready var particles: GPUParticles2D = $Particles
+@onready var bgPartc: GPUParticles2D = $BackgroundParticle
 
 const border_margin: float = 30
 var allowedToMove = true
@@ -16,6 +18,12 @@ func setAllowedToMove(state : bool) -> void:
 func failPlayer() -> void:
 	setAllowedToMove(false)
 	hitSound.play()
+	particles.set_emitting(false)
+	bgPartc.set_emitting(false)
+	
+func setRave(state: bool) -> void:
+	particles.set_emitting(state)
+	bgPartc.set_emitting(state)
 	
 func CheckBoundries() -> void:
 	# Declara limites de posición para que no se salga de la pantalla.
@@ -47,6 +55,10 @@ func _physics_process(delta: float):
 	else:
 		velocity += (input * accel * delta)
 		velocity = velocity.limit_length(SPEED)
+		
+	particles.get_process_material().set_gravity(
+		Vector3( -velocity.x , -velocity.y ,0)
+	)
 
 	# Declara limites de posición para que no se salga de la pantalla.
 	CheckBoundries()

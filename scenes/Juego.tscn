@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://btfes7gv5do00"]
+[gd_scene load_steps=26 format=3 uid="uid://btfes7gv5do00"]
 
 [ext_resource type="Script" path="res://scripts/Actividad-Juego.gd" id="1_icbs4"]
 [ext_resource type="Script" path="res://scripts/Jugador.gd" id="2_ydlqv"]
@@ -6,12 +6,13 @@
 [ext_resource type="AudioStream" uid="uid://dxb6llnaj5sr5" path="res://sounds/player_hit.mp3" id="4_x2m1b"]
 [ext_resource type="Script" path="res://scripts/Enem1.gd" id="5_fu4qo"]
 [ext_resource type="AudioStream" uid="uid://ckqqesvb4n6r6" path="res://sounds/game-music-start.ogg" id="5_qt7k2"]
+[ext_resource type="Material" uid="uid://d5tdcieonj7a" path="res://scripts/Particles.tres" id="6_4k0jy"]
+[ext_resource type="Material" uid="uid://bft8nul24idbh" path="res://scenes/BackgroundParticle.tres" id="6_73efi"]
 [ext_resource type="FontFile" uid="uid://bsg7t5g7b0kqv" path="res://Gosrokan.otf" id="6_udm3b"]
 [ext_resource type="StyleBox" uid="uid://tqtcfqm07ue8" path="res://EST-Boton.tres" id="7_ad7sf"]
 [ext_resource type="AudioStream" uid="uid://c5pe7ulc518jk" path="res://sounds/level-up.mp3" id="7_igkff"]
 [ext_resource type="StyleBox" uid="uid://pdto5gafe0tl" path="res://EST-BotonHover.tres" id="8_ktrru"]
 [ext_resource type="AudioStream" uid="uid://bo31nw0f4vh3r" path="res://sounds/game-music-loop.ogg" id="8_vtdgg"]
-[ext_resource type="AnimationLibrary" uid="uid://cqt43def38q83" path="res://animations/collection.res" id="9_4b5vw"]
 [ext_resource type="StyleBox" uid="uid://cgy7vdqjw3tj" path="res://EST-BotonPresionado.tres" id="9_7of06"]
 
 [sub_resource type="TileSet" id="TileSet_ebaq8"]
@@ -24,6 +25,284 @@ size = Vector2(64, 60)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ookth"]
 
+[sub_resource type="Animation" id="Animation_2wv6d"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Jugador/Camera2D:zoom")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("./TiempoActual:horizontal_alignment")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("./TiempoActual:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(9, 35)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("./RichTextLabel:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(232, 700)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("./RichTextLabel:scale")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("./RichTextLabel:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("RichTextLabel:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Etiqueta-Tiempo:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(8, 8)]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Etiqueta-Tiempo:modulate")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_hlnue"]
+resource_name = "highScoreShow"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("./Perdiste/Contenido Juego/HitLabel/60:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 0.34151),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("./Perdiste/Contenido Juego/HitLabel/60:scale")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 0.25),
+"update": 0,
+"values": [Vector2(2.08165e-12, 2.08165e-12), Vector2(1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_0bqvn"]
+resource_name = "moveTimer"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("./TiempoActual:horizontal_alignment")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("./TiempoActual:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(0.267943, 4.75683),
+"update": 0,
+"values": [Vector2(9, 35), Vector2(312, 280)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("../Jugador/Camera2D:zoom")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(0.164939, 0.164939),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(2, 2)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Etiqueta-Tiempo:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.233258, 0.233258),
+"update": 0,
+"values": [Vector2(8, 8), Vector2(8, 20)]
+}
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Etiqueta-Tiempo:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.125, 0.125),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_nev3y"]
+resource_name = "playerHitZoom"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Jugador/Camera2D:zoom")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(0.0490367, 0.143588),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(2, 2)]
+}
+
+[sub_resource type="Animation" id="Animation_mrxtr"]
+resource_name = "readyAnim"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("./RichTextLabel:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.217638, 0.217638),
+"update": 0,
+"values": [Vector2(232, 700), Vector2(232, 250)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("./RichTextLabel:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.5, 2),
+"transitions": PackedFloat32Array(1, 4, 4),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 1), Vector2(2, 2)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("./RichTextLabel:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1.5, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("RichTextLabel:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_n8n2r"]
+_data = {
+"RESET": SubResource("Animation_2wv6d"),
+"highScoreShow": SubResource("Animation_hlnue"),
+"moveTimer": SubResource("Animation_0bqvn"),
+"playerHitZoom": SubResource("Animation_nev3y"),
+"readyAnim": SubResource("Animation_mrxtr")
+}
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mw3uw"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
@@ -34,6 +313,8 @@ script = ExtResource("1_icbs4")
 [node name="GridMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_ebaq8")
 format = 2
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
 
 [node name="Fondo" type="ColorRect" parent="."]
 visible = false
@@ -68,6 +349,11 @@ position = Vector2(384, 320)
 script = ExtResource("2_ydlqv")
 metadata/_edit_group_ = true
 
+[node name="BackgroundParticle" type="GPUParticles2D" parent="Jugador"]
+emitting = false
+amount = 300
+process_material = ExtResource("6_73efi")
+
 [node name="Camera2D" type="Camera2D" parent="Jugador"]
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
@@ -81,6 +367,13 @@ offset_right = 35.0
 offset_bottom = -30.0
 text = "therehr"
 metadata/_edit_lock_ = true
+
+[node name="Particles" type="GPUParticles2D" parent="Jugador"]
+emitting = false
+amount = 70
+process_material = ExtResource("6_4k0jy")
+lifetime = 5.0
+trail_enabled = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Jugador"]
 shape = SubResource("CircleShape2D_0fdd4")
@@ -115,7 +408,7 @@ shape = SubResource("RectangleShape2D_ookth")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Interfaz")
 libraries = {
-"": ExtResource("9_4b5vw")
+"": SubResource("AnimationLibrary_n8n2r")
 }
 
 [node name="Interfaz" type="CanvasLayer" parent="."]

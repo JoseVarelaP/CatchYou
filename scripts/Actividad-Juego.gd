@@ -114,6 +114,9 @@ func _process(delta: float) -> void:
 		curRhythmStrength = lerp(curRhythmStrength, 0.0, ShakeDecay * delta)
 		speedCont.position = ogSpeedLabelPos + Vector2(0, -curRhythmStrength)
 		
+		var cmlPlayerzoom = clampf(curRhythmStrength/10, 0.4, 0.44)
+		$Jugador/CollisionShape2D/ActorJug.set_scale( Vector2( cmlPlayerzoom, cmlPlayerzoom) )
+		
 	if( lostGame ):
 		return
 	
@@ -157,6 +160,7 @@ func _SongIntroFinished() -> void:
 func _CrossedBeat():
 	if(beatsUntilRave > 0):
 		beatsUntilRave -= 1
-		print(beatsUntilRave)
+		if beatsUntilRave == 0:
+			$Jugador.setRave(true)
 	else:
 		curRhythmStrength = 8.0
