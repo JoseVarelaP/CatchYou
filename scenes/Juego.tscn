@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://btfes7gv5do00"]
+[gd_scene load_steps=33 format=3 uid="uid://btfes7gv5do00"]
 
 [ext_resource type="Script" path="res://scripts/Actividad-Juego.gd" id="1_icbs4"]
 [ext_resource type="Script" path="res://scripts/Jugador.gd" id="2_ydlqv"]
@@ -71,7 +71,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("./RichTextLabel:position")
+tracks/3/path = NodePath("Listo:position")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -83,7 +83,7 @@ tracks/3/keys = {
 tracks/4/type = "value"
 tracks/4/imported = false
 tracks/4/enabled = true
-tracks/4/path = NodePath("./RichTextLabel:scale")
+tracks/4/path = NodePath("Listo:scale")
 tracks/4/interp = 1
 tracks/4/loop_wrap = true
 tracks/4/keys = {
@@ -95,7 +95,7 @@ tracks/4/keys = {
 tracks/5/type = "value"
 tracks/5/imported = false
 tracks/5/enabled = true
-tracks/5/path = NodePath("./RichTextLabel:modulate")
+tracks/5/path = NodePath("Listo:modulate")
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
@@ -107,7 +107,7 @@ tracks/5/keys = {
 tracks/6/type = "value"
 tracks/6/imported = false
 tracks/6/enabled = true
-tracks/6/path = NodePath("RichTextLabel:visible")
+tracks/6/path = NodePath("Listo:visible")
 tracks/6/interp = 1
 tracks/6/loop_wrap = true
 tracks/6/keys = {
@@ -139,6 +139,33 @@ tracks/8/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Color(1, 1, 1, 1)]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("HighScorePanel:position")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-210.579, 79.8403)]
+}
+
+[sub_resource type="Animation" id="Animation_okcoc"]
+resource_name = "achievedHighScore"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HighScorePanel:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.133972, 0.133972),
+"update": 0,
+"values": [Vector2(-210.579, 79.8403), Vector2(-10.978, 79.8403)]
 }
 
 [sub_resource type="Animation" id="Animation_hlnue"]
@@ -253,7 +280,7 @@ length = 2.0
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("./RichTextLabel:position")
+tracks/0/path = NodePath("Listo:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -265,7 +292,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("./RichTextLabel:scale")
+tracks/1/path = NodePath("Listo:scale")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -277,7 +304,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("./RichTextLabel:modulate")
+tracks/2/path = NodePath("Listo:modulate")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -289,7 +316,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("RichTextLabel:visible")
+tracks/3/path = NodePath("Listo:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -302,6 +329,7 @@ tracks/3/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_n8n2r"]
 _data = {
 "RESET": SubResource("Animation_2wv6d"),
+"achievedHighScore": SubResource("Animation_okcoc"),
 "highScoreShow": SubResource("Animation_hlnue"),
 "moveTimer": SubResource("Animation_0bqvn"),
 "playerHitZoom": SubResource("Animation_nev3y"),
@@ -311,6 +339,10 @@ _data = {
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mw3uw"]
 corner_radius_top_left = 8
 corner_radius_top_right = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uncbe"]
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
 
 [node name="Juego" type="Node2D"]
 script = ExtResource("1_icbs4")
@@ -500,6 +532,7 @@ metadata/_edit_lock_ = true
 
 [node name="value" type="RichTextLabel" parent="Interfaz/speedFactor"]
 clip_contents = false
+layout_mode = 0
 offset_left = 0.998016
 offset_top = 4.98993
 offset_right = 88.998
@@ -605,7 +638,7 @@ text = "Regresar a menu
 [node name="Container" type="Container" parent="Interfaz/Perdiste/Contenido Juego/VBoxContainer"]
 layout_mode = 2
 
-[node name="RichTextLabel" type="RichTextLabel" parent="Interfaz"]
+[node name="Listo" type="RichTextLabel" parent="Interfaz"]
 clip_contents = false
 offset_left = 232.0
 offset_top = 700.0
@@ -616,6 +649,28 @@ theme_override_fonts/normal_font = ExtResource("6_udm3b")
 theme_override_font_sizes/normal_font_size = 128
 bbcode_enabled = true
 text = "[p align=center][wave amp=60.0 freq=8.0]Listo?[/wave][/p]"
+
+[node name="HighScorePanel" type="Panel" parent="Interfaz"]
+offset_left = -210.579
+offset_top = 79.8403
+offset_right = -10.5788
+offset_bottom = 109.84
+theme_override_styles/panel = SubResource("StyleBoxFlat_uncbe")
+
+[node name="text" type="RichTextLabel" parent="Interfaz/HighScorePanel"]
+clip_contents = false
+layout_mode = 0
+offset_top = -5.96806
+offset_right = 200.0
+offset_bottom = 34.0319
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_constants/shadow_offset_y = 0
+theme_override_constants/shadow_outline_size = 8
+theme_override_fonts/normal_font = ExtResource("6_udm3b")
+theme_override_font_sizes/normal_font_size = 25
+bbcode_enabled = true
+text = "[p align=center][rainbow freq=0.2 sat=1 val=1][wave amp=60.0 freq=8.0]Nuevo Record![/wave][/rainbow][/p]"
+scroll_active = false
 
 [node name="nextLevelTimer" type="Timer" parent="."]
 

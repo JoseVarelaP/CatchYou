@@ -28,6 +28,8 @@ var curRhythmStrength: float = 0.0
 var beatsUntilRave: int = 15
 ##
 
+var highScoreAchieved: bool = false
+
 var tiempoTotal: float = 0.0
 var lostGame: bool = false
 var ogSpeedLabelPos: Vector2
@@ -85,16 +87,16 @@ func actionLoseGame() -> void:
 	speedLabel.set_text( "[p align=center]%.2fx[/p]" % enemySpeedFactor )
 	$Jugador.failPlayer()
 	$Enem1.setMove(false)
+	$Interfaz/Listo.set_visible(false)
 	skillTimer.stop()
 	BPMTimer.stop()
+	$Interfaz/HighScorePanel.set_visible(false)
 	applyShake()
 	
 	animPlayer.play("playerHitZoom")
 	animPlayer.play("moveTimer")
 	
 	await get_tree().create_timer(1).timeout
-	
-	animPlayer.play("moveTimer")
 	
 	# Muestra la interfaz.
 	$Interfaz/Perdiste.set_visible(true)
@@ -104,7 +106,7 @@ func actionLoseGame() -> void:
 		animPlayer.play("highScoreShow")
 		highScoreSound.play()
 		# es un record!
-	#saveFile.save(tiempoTotal, UltimoTiempo)
+		saveFile.save(tiempoTotal, UltimoTiempo)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -133,6 +135,17 @@ func _process(delta: float) -> void:
 	tiempoTotal += delta
 	# Actualiza el tiempo total en la pantalla.
 	tiempoLabel.set_text( Tiempo.ProcesaTiempo(tiempoTotal) )
+	
+	if( not highScoreAchieved and tiempoTotal > UltimoTiempo ):
+		highScoreAchieved = true
+		showHighScore()
+		
+func showHighScore() -> void:
+	# Solo muestra la alta puntuación cuando es mayor de 0.
+	if( UltimoTiempo == 0 ):
+		return
+		
+	animPlayer.play("achievedHighScore")
 
 func _on_area_2d_body_entered(body) -> void:
 	if( body == $Jugador ):
@@ -167,7 +180,6 @@ func _CrossedBeat():
 			$Jugador.setRave(true)
 	else:
 		curRhythmStrength = 8.0
-
 
 func _on_jugador_boost_status_changed(status):
 	if status:
