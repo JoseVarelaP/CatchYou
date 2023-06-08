@@ -12,8 +12,10 @@ var allowedToMove = true
 
 func setAllowedToMove(state : bool) -> void:
 	allowedToMove = state
-	if( !state ):
-		hitSound.play()
+		
+func failPlayer() -> void:
+	setAllowedToMove(false)
+	hitSound.play()
 	
 func CheckBoundries() -> void:
 	# Declara limites de posición para que no se salga de la pantalla.
@@ -34,8 +36,6 @@ func getInputMovement() -> Vector2:
 func _physics_process(delta: float):
 	if( not allowedToMove ):
 		return
-		
-	print_debug(GlobalVars.areaForPlayer)
 
 	input = getInputMovement()
 	

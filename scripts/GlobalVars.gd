@@ -2,7 +2,7 @@ extends Node
 
 var current_scene: Node
 
-@export var areaForPlayer: Vector2 = Vector2(800,600)
+@export var areaForPlayer: Vector2 = Vector2(800.0,600.0)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
