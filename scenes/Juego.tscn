@@ -1,8 +1,7 @@
-[gd_scene load_steps=26 format=3 uid="uid://btfes7gv5do00"]
+[gd_scene load_steps=30 format=3 uid="uid://btfes7gv5do00"]
 
 [ext_resource type="Script" path="res://scripts/Actividad-Juego.gd" id="1_icbs4"]
 [ext_resource type="Script" path="res://scripts/Jugador.gd" id="2_ydlqv"]
-[ext_resource type="Texture2D" uid="uid://d2e0kqmcquwuo" path="res://img/icon.svg" id="3_brjh2"]
 [ext_resource type="AudioStream" uid="uid://dxb6llnaj5sr5" path="res://sounds/player_hit.mp3" id="4_x2m1b"]
 [ext_resource type="Script" path="res://scripts/Enem1.gd" id="5_fu4qo"]
 [ext_resource type="AudioStream" uid="uid://ckqqesvb4n6r6" path="res://sounds/game-music-start.ogg" id="5_qt7k2"]
@@ -12,8 +11,13 @@
 [ext_resource type="StyleBox" uid="uid://tqtcfqm07ue8" path="res://EST-Boton.tres" id="7_ad7sf"]
 [ext_resource type="AudioStream" uid="uid://c5pe7ulc518jk" path="res://sounds/level-up.mp3" id="7_igkff"]
 [ext_resource type="StyleBox" uid="uid://pdto5gafe0tl" path="res://EST-BotonHover.tres" id="8_ktrru"]
+[ext_resource type="Texture2D" uid="uid://eyncryuv70" path="res://img/Ent-base.svg" id="8_sl6sl"]
 [ext_resource type="AudioStream" uid="uid://bo31nw0f4vh3r" path="res://sounds/game-music-loop.ogg" id="8_vtdgg"]
 [ext_resource type="StyleBox" uid="uid://cgy7vdqjw3tj" path="res://EST-BotonPresionado.tres" id="9_7of06"]
+[ext_resource type="Texture2D" uid="uid://c7xbw5pu7j7ek" path="res://img/char-face.svg" id="9_lvt4d"]
+[ext_resource type="AudioStream" uid="uid://l05tbsxl1oea" path="res://sounds/boost-loop.ogg" id="11_vv48r"]
+[ext_resource type="AudioStream" uid="uid://dtoiwfc8qtqh" path="res://sounds/boost-ignition.ogg" id="12_0qrlu"]
+[ext_resource type="Texture2D" uid="uid://dgjfa2sxrrv3n" path="res://img/enem-face.svg" id="12_ga0i7"]
 
 [sub_resource type="TileSet" id="TileSet_ebaq8"]
 
@@ -380,12 +384,25 @@ shape = SubResource("CircleShape2D_0fdd4")
 metadata/_edit_lock_ = true
 
 [node name="ActorJug" type="Sprite2D" parent="Jugador/CollisionShape2D"]
+modulate = Color(0, 1, 1, 1)
 scale = Vector2(0.4, 0.4)
-texture = ExtResource("3_brjh2")
+texture = ExtResource("8_sl6sl")
 metadata/_edit_lock_ = true
+
+[node name="face" type="Sprite2D" parent="Jugador/CollisionShape2D"]
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("9_lvt4d")
 
 [node name="hitPlayer" type="AudioStreamPlayer" parent="Jugador"]
 stream = ExtResource("4_x2m1b")
+
+[node name="boost-loop" type="AudioStreamPlayer" parent="Jugador"]
+stream = ExtResource("11_vv48r")
+pitch_scale = 2.37
+
+[node name="boost-init" type="AudioStreamPlayer" parent="Jugador"]
+stream = ExtResource("12_0qrlu")
+pitch_scale = 0.75
 
 [node name="Enem1" type="CharacterBody2D" parent="."]
 position = Vector2(104, 158)
@@ -398,12 +415,17 @@ metadata/_edit_group_ = true
 shape = SubResource("RectangleShape2D_r6ce1")
 
 [node name="spr" type="Sprite2D" parent="Enem1"]
+modulate = Color(1, 0, 0, 1)
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("3_brjh2")
+texture = ExtResource("8_sl6sl")
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Enem1"]
 shape = SubResource("RectangleShape2D_ookth")
+
+[node name="face" type="Sprite2D" parent="Enem1"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("12_ga0i7")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Interfaz")
@@ -575,6 +597,7 @@ text = "[p align=center][wave amp=60.0 freq=8.0]Listo?[/wave][/p]"
 [node name="BPMTimer" type="Timer" parent="."]
 
 [connection signal="finished" from="MusicStart" to="." method="_SongIntroFinished"]
+[connection signal="boostStatusChanged" from="Jugador" to="." method="_on_jugador_boost_status_changed"]
 [connection signal="body_entered" from="Enem1/Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="button_up" from="Interfaz/Perdiste/Contenido Juego/VBoxContainer/MarginContainer/Reiniciar" to="." method="_on_reiniciar_button_up"]
 [connection signal="button_up" from="Interfaz/Perdiste/Contenido Juego/VBoxContainer/MarginContainer2/Salir" to="." method="_on_salir_button_up"]

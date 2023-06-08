@@ -60,8 +60,11 @@ func beginGame() -> void:
 	$Jugador.setAllowedToMove(true)
 	$Enem1.setMove(true)
 	
-func applyShake() -> void:
-	curShakeStrength = ShakeStrength
+func applyShake(custom_Val: float = 0.0) -> void:
+	if custom_Val > 0:
+		curShakeStrength = custom_Val
+	else:
+		curShakeStrength = ShakeStrength
 	
 func getRandomCameraOffset() -> Vector2:
 	return Vector2(
@@ -164,3 +167,8 @@ func _CrossedBeat():
 			$Jugador.setRave(true)
 	else:
 		curRhythmStrength = 8.0
+
+
+func _on_jugador_boost_status_changed(status):
+	if status:
+		applyShake( 10 )
