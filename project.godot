@@ -23,9 +23,10 @@ GlobalVars="*res://scripts/GlobalVars.gd"
 
 [display]
 
-window/size/viewport_width=800
-window/size/viewport_height=600
+window/size/viewport_width=1600
+window/size/viewport_height=1200
 window/size/resizable=false
+window/stretch/scale=2.0
 
 [input]
 
