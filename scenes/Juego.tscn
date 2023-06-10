@@ -1,34 +1,29 @@
-[gd_scene load_steps=33 format=3 uid="uid://btfes7gv5do00"]
+[gd_scene load_steps=31 format=3 uid="uid://btfes7gv5do00"]
 
 [ext_resource type="Script" path="res://scripts/Actividad-Juego.gd" id="1_icbs4"]
 [ext_resource type="Script" path="res://scripts/Jugador.gd" id="2_ydlqv"]
 [ext_resource type="AudioStream" uid="uid://dxb6llnaj5sr5" path="res://sounds/player_hit.mp3" id="4_x2m1b"]
-[ext_resource type="Script" path="res://scripts/Enem1.gd" id="5_fu4qo"]
 [ext_resource type="AudioStream" uid="uid://ckqqesvb4n6r6" path="res://sounds/game-music-start.ogg" id="5_qt7k2"]
 [ext_resource type="Material" uid="uid://d5tdcieonj7a" path="res://scripts/Particles.tres" id="6_4k0jy"]
-[ext_resource type="Material" uid="uid://bft8nul24idbh" path="res://scenes/BackgroundParticle.tres" id="6_73efi"]
+[ext_resource type="Material" uid="uid://bft8nul24idbh" path="res://particles/BackgroundParticle.tres" id="6_fq2id"]
 [ext_resource type="FontFile" uid="uid://bsg7t5g7b0kqv" path="res://Gosrokan.otf" id="6_udm3b"]
 [ext_resource type="StyleBox" uid="uid://tqtcfqm07ue8" path="res://EST-Boton.tres" id="7_ad7sf"]
 [ext_resource type="AudioStream" uid="uid://c5pe7ulc518jk" path="res://sounds/level-up.mp3" id="7_igkff"]
+[ext_resource type="Material" uid="uid://fc2odsr83xrp" path="res://particles/BoostParticle.tres" id="8_7y56f"]
 [ext_resource type="StyleBox" uid="uid://pdto5gafe0tl" path="res://EST-BotonHover.tres" id="8_ktrru"]
-[ext_resource type="Material" uid="uid://fc2odsr83xrp" path="res://scenes/BoostParticle.tres" id="8_muwee"]
 [ext_resource type="Texture2D" uid="uid://eyncryuv70" path="res://img/Ent-base.svg" id="8_sl6sl"]
 [ext_resource type="AudioStream" uid="uid://bo31nw0f4vh3r" path="res://sounds/game-music-loop.ogg" id="8_vtdgg"]
 [ext_resource type="StyleBox" uid="uid://cgy7vdqjw3tj" path="res://EST-BotonPresionado.tres" id="9_7of06"]
 [ext_resource type="Texture2D" uid="uid://c7xbw5pu7j7ek" path="res://img/char-face.svg" id="9_lvt4d"]
 [ext_resource type="AudioStream" uid="uid://l05tbsxl1oea" path="res://sounds/boost-loop.ogg" id="11_vv48r"]
 [ext_resource type="AudioStream" uid="uid://dtoiwfc8qtqh" path="res://sounds/boost-ignition.ogg" id="12_0qrlu"]
-[ext_resource type="Texture2D" uid="uid://dgjfa2sxrrv3n" path="res://img/enem-face.svg" id="12_ga0i7"]
+[ext_resource type="PackedScene" uid="uid://mwd57hdeldfa" path="res://scenes/enem_1.tscn" id="14_6vfou"]
+[ext_resource type="PackedScene" uid="uid://bgem34307142l" path="res://scenes/Enem_2.tscn" id="16_0hwcj"]
 
 [sub_resource type="TileSet" id="TileSet_ebaq8"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0fdd4"]
 radius = 32.0
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_r6ce1"]
-size = Vector2(64, 60)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ookth"]
 
 [sub_resource type="Animation" id="Animation_2wv6d"]
 length = 0.001
@@ -381,7 +376,7 @@ volume_db = 6.0
 [node name="levelUp" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("7_igkff")
 
-[node name="Jugador" type="CharacterBody2D" parent="."]
+[node name="Jugador" type="CharacterBody2D" parent="." groups=["player"]]
 position = Vector2(384, 320)
 script = ExtResource("2_ydlqv")
 metadata/_edit_group_ = true
@@ -389,7 +384,7 @@ metadata/_edit_group_ = true
 [node name="BackgroundParticle" type="GPUParticles2D" parent="Jugador"]
 emitting = false
 amount = 300
-process_material = ExtResource("6_73efi")
+process_material = ExtResource("6_fq2id")
 
 [node name="Camera2D" type="Camera2D" parent="Jugador"]
 position_smoothing_enabled = true
@@ -414,8 +409,8 @@ trail_enabled = true
 
 [node name="BoostParticle" type="GPUParticles2D" parent="Jugador"]
 emitting = false
-amount = 140
-process_material = ExtResource("8_muwee")
+amount = 800
+process_material = ExtResource("8_7y56f")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Jugador"]
 shape = SubResource("CircleShape2D_0fdd4")
@@ -461,28 +456,9 @@ max_value = 3.0
 value = 3.0
 show_percentage = false
 
-[node name="Enem1" type="CharacterBody2D" parent="."]
-position = Vector2(104, 158)
-script = ExtResource("5_fu4qo")
-metadata/_edit_group_ = true
+[node name="Enemigo1" parent="." instance=ExtResource("14_6vfou")]
 
-[node name="Area2D" type="Area2D" parent="Enem1"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Enem1/Area2D"]
-shape = SubResource("RectangleShape2D_r6ce1")
-
-[node name="spr" type="Sprite2D" parent="Enem1"]
-modulate = Color(1, 0, 0, 1)
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("8_sl6sl")
-metadata/_edit_lock_ = true
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Enem1"]
-shape = SubResource("RectangleShape2D_ookth")
-
-[node name="face" type="Sprite2D" parent="Enem1"]
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("12_ga0i7")
+[node name="Enemigo2" parent="." groups=["enemy"] instance=ExtResource("16_0hwcj")]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Interfaz")
@@ -678,7 +654,6 @@ scroll_active = false
 
 [connection signal="finished" from="MusicStart" to="." method="_SongIntroFinished"]
 [connection signal="boostStatusChanged" from="Jugador" to="." method="_on_jugador_boost_status_changed"]
-[connection signal="body_entered" from="Enem1/Area2D" to="." method="_on_area_2d_body_entered"]
 [connection signal="button_up" from="Interfaz/Perdiste/Contenido Juego/VBoxContainer/MarginContainer/Reiniciar" to="." method="_on_reiniciar_button_up"]
 [connection signal="button_up" from="Interfaz/Perdiste/Contenido Juego/VBoxContainer/MarginContainer2/Salir" to="." method="_on_salir_button_up"]
 [connection signal="timeout" from="nextLevelTimer" to="." method="_on_next_level_timer_timeout"]

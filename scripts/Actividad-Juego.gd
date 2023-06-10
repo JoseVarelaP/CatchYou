@@ -14,6 +14,7 @@ extends Node2D
 @onready var speedCont = $Interfaz/speedFactor
 @onready var speedLabel = $Interfaz/speedFactor/value
 @onready var rand = RandomNumberGenerator.new()
+@onready var enemies = get_tree().get_nodes_in_group("enemy")
 
 @onready var skillTimer = $nextLevelTimer
 @onready var BPMTimer = $BPMTimer
@@ -40,13 +41,22 @@ var UltimoTiempo: float = 0.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	GlobalVars.playerHit.connect(_onPlayerHit)
 	rand.randomize()
 	UltimoTiempo = saveFile.loadfile()
 	ogSpeedLabelPos = speedCont.position
 	lostGame = true
 	
+	# Posiciona los oponentes.
+	enemies[0].position = Vector2(100,200)
+	enemies[1].position = Vector2(GlobalVars.areaForPlayer.x - 100,200)
+	
 	$Jugador.setAllowedToMove(false)
-	$Enem1.setMove(false)
+	
+	print(enemies)
+	
+	for e in enemies:
+		e.setMove(false)
 	
 	animPlayer.play("readyAnim")
 	
@@ -60,7 +70,11 @@ func beginGame() -> void:
 	skillTimer.start(10)
 	BPMTimer.start(BPM)
 	$Jugador.setAllowedToMove(true)
-	$Enem1.setMove(true)
+	for e in enemies:
+		print(e)
+		e.setMove(true)
+		
+	#$Enem1.setMove(true)
 	
 func applyShake(custom_Val: float = 0.0) -> void:
 	if custom_Val > 0:
@@ -86,7 +100,8 @@ func actionLoseGame() -> void:
 	LoopMusic.stop()
 	speedLabel.set_text( "[p align=center]%.2fx[/p]" % enemySpeedFactor )
 	$Jugador.failPlayer()
-	$Enem1.setMove(false)
+	for e in enemies:
+		e.setMove(false)
 	$Interfaz/Listo.set_visible(false)
 	skillTimer.stop()
 	BPMTimer.stop()
@@ -124,6 +139,8 @@ func _process(delta: float) -> void:
 		
 	if( lostGame ):
 		return
+		
+	GlobalVars.curPlayerPosition = $Jugador.global_position
 	
 	GlobalVars.areaForPlayer += Vector2(delta * 3.0, delta * 3.0)
 	$ReferenceRect.set_size( GlobalVars.areaForPlayer )
@@ -147,10 +164,8 @@ func showHighScore() -> void:
 		
 	animPlayer.play("achievedHighScore")
 
-func _on_area_2d_body_entered(body) -> void:
-	if( body == $Jugador ):
-		print_debug("[Actividad-Juego] Jugador - Colision con kill trigger")
-		actionLoseGame()
+func _onPlayerHit() -> void:
+	actionLoseGame()
 
 func resetBoardSize() -> void:
 	GlobalVars.areaForPlayer = Vector2(800.0,600.0)
@@ -168,7 +183,8 @@ func _on_next_level_timer_timeout() -> void:
 	LvUpSound.play()
 	enemySpeedFactor += 0.2
 	speedLabel.set_text( "[p align=center][wave amp=60.0 freq=8.0]%.2fx[/wave][/p]" % enemySpeedFactor )
-	enemy.changeSpeed( enemySpeedFactor )
+	for e in enemies:
+		e.changeSpeed( enemySpeedFactor ) 
 
 func _SongIntroFinished() -> void:
 	LoopMusic.play()

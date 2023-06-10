@@ -32,6 +32,7 @@ func failPlayer() -> void:
 	setAllowedToMove(false)
 	hitSound.play()
 	particles.set_emitting(false)
+	boostParticle.set_emitting(false)
 	bgPartc.set_emitting(false)
 	$"boost-loop".stop()
 	$"boost-init".stop()
