@@ -1,10 +1,20 @@
-[gd_scene load_steps=8 format=3 uid="uid://dsg83rfsde2wp"]
+[gd_scene load_steps=15 format=3 uid="uid://dsg83rfsde2wp"]
 
 [ext_resource type="Script" path="res://scripts/Menu.gd" id="1_ggoxk"]
 [ext_resource type="FontFile" uid="uid://bsg7t5g7b0kqv" path="res://Gosrokan.otf" id="2_hctws"]
+[ext_resource type="Material" uid="uid://bft8nul24idbh" path="res://particles/BackgroundParticle.tres" id="2_k4aug"]
+[ext_resource type="Texture2D" uid="uid://bnm0sdi8h2gln" path="res://img/game-title.svg" id="2_ljqgb"]
 [ext_resource type="StyleBox" uid="uid://tqtcfqm07ue8" path="res://EST-Boton.tres" id="3_3pjkf"]
 [ext_resource type="StyleBox" uid="uid://pdto5gafe0tl" path="res://EST-BotonHover.tres" id="4_ewm5j"]
 [ext_resource type="StyleBox" uid="uid://cgy7vdqjw3tj" path="res://EST-BotonPresionado.tres" id="5_iatde"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_juqql"]
+emission_shape = 6
+emission_ring_axis = Vector3(180, 200, 180)
+emission_ring_height = 1.0
+emission_ring_radius = 300.0
+emission_ring_inner_radius = 200.0
+gravity = Vector3(2.08165e-12, 2.08165e-12, 2.08165e-12)
 
 [sub_resource type="InputEventAction" id="InputEventAction_eaolk"]
 action = &"start_game"
@@ -12,24 +22,153 @@ action = &"start_game"
 [sub_resource type="Shortcut" id="Shortcut_b5x3w"]
 events = [SubResource("InputEventAction_eaolk")]
 
+[sub_resource type="Animation" id="Animation_ldprv"]
+resource_name = "transitionIn"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MarginContainer:scale")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(0.287175, 4.28709),
+"update": 0,
+"values": [Vector2(0.5, 0.5), Vector2(1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ColorRect:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="Animation" id="Animation_fn11h"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MarginContainer:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.5, 0.5)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("ColorRect:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_bgpfp"]
+resource_name = "transitionOut"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ColorRect:color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.6),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_u78fv"]
+_data = {
+"RESET": SubResource("Animation_fn11h"),
+"transitionIn": SubResource("Animation_ldprv"),
+"transitionOut": SubResource("Animation_bgpfp")
+}
+
 [node name="mainMenu" type="Node2D"]
 script = ExtResource("1_ggoxk")
 
+[node name="ring" type="GPUParticles2D" parent="."]
+position = Vector2(569, 222)
+amount = 400
+process_material = SubResource("ParticleProcessMaterial_juqql")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="."]
+position = Vector2(630, 493)
+amount = 300
+process_material = ExtResource("2_k4aug")
+
 [node name="MarginContainer" type="MarginContainer" parent="."]
-offset_right = 800.0
+offset_left = 1.738
+offset_right = 801.738
 offset_bottom = 600.0
+scale = Vector2(0.5, 0.5)
+pivot_offset = Vector2(400, 300)
 theme_override_constants/margin_left = 90
 theme_override_constants/margin_right = 90
 
 [node name="Contenido Juego" type="VBoxContainer" parent="MarginContainer"]
 layout_mode = 2
 
+[node name="Sprite2D" type="Sprite2D" parent="MarginContainer/Contenido Juego"]
+position = Vector2(314, 180)
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("2_ljqgb")
+
 [node name="Label" type="Label" parent="MarginContainer/Contenido Juego"]
 layout_mode = 2
 size_flags_vertical = 3
 theme_override_fonts/font = ExtResource("2_hctws")
 theme_override_font_sizes/font_size = 128
-text = "Titulo Aqui"
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -101,6 +240,16 @@ offset_bottom = 35.0
 theme_override_fonts/font = ExtResource("2_hctws")
 theme_override_font_sizes/font_size = 24
 text = "Tiempo Record:"
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 1000.0
+offset_bottom = 1000.0
+color = Color(0, 0, 0, 1)
+
+[node name="anims" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_u78fv")
+}
 
 [connection signal="button_up" from="MarginContainer/Contenido Juego/VBoxContainer/MarginContainer/InicioJuego" to="." method="_on_inicio_juego_button_up"]
 [connection signal="pressed" from="MarginContainer/Contenido Juego/VBoxContainer/MarginContainer/InicioJuego" to="." method="_on_inicio_juego_pressed"]

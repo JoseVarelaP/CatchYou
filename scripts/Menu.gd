@@ -5,7 +5,13 @@ var mainGameScene : PackedScene
 var saveFile: saveFileManager = saveFileManager.new()
 var Tiempo: TiempoCalc = TiempoCalc.new()
 
+func _ready():
+	$anims.play("transitionIn")
+
 func _on_inicio_juego_button_up() -> void:
+	$anims.play("transitionOut")
+	await get_tree().create_timer(1).timeout
+	
 	print_debug("[MainMenu] Cambiando escena")
 	get_tree().change_scene_to_file("res://scenes/Juego.tscn")
 

@@ -38,65 +38,51 @@ class GRNode:
 		else:
 			self.weight = 0
 		
-		#print("created position in (%d %d)" % [self.pos.x, self.pos.y])
-		
 	func _to_string() -> String:
 		return "(%d, %d)" % [pos.x, pos.y]
 		
 	func f_estrella(cur: Vector2i, goal: Vector2i):
 		var res = self.weight + self.h_calc(cur, goal)
-		#print(res)
 		return res
 		
 	# Calcula la distancia. Para esta ocasión, solamente detecta la distancia posible y más cercana
 	# al jugador, y aplica el valor. El que tenga menor valor, tendrá mejor prioridad.
 	func h_calc(cur: Vector2i, goal: Vector2i) -> float:
 		var diff: Vector2 = cur - goal
-		var distance: float = diff.length()
-		return distance
+		return diff.length()
 		
 	func expand(goal: Vector2i, franja: Array[GRNode]) -> void:
-		var new_pos
-		var cell
-		
-		var maxAreaTile = GlobalVars.getPositionTileFromMap( GlobalVars.areaForPlayer )
+		var new_pos: GRNode = null
+		var maxAreaTile: Vector2i = GlobalVars.getPositionTileFromMap( GlobalVars.areaForPlayer )
 		
 		for add in GlobalVars.PossibleLookoutLocations:
 			var tempPosition: Vector2i = self.pos + add
 			
 			if tempPosition.x < 0 or tempPosition.y < 0:
-				#print("Found invalid position", tempPosition)
 				continue
 			
-			if tempPosition.x > maxAreaTile.x or tempPosition.y > maxAreaTile.y :
-				#print("Outside b-r corner")
+			if tempPosition.x > maxAreaTile.x or tempPosition.y > maxAreaTile.y:
 				continue
 			
-			#print( tempPosition, goal )
 			new_pos = GRNode.new( tempPosition, self )
 			new_pos.heur = new_pos.h_calc( tempPosition, goal )
 			self.children.append(new_pos)
 			
 		# Agrega los elementos generados a la franja, para ser analizados.
-		#print(self.children)
 		for branch in self.children:
 			if franja.is_empty():
 				franja.append(branch)
 			else:
 				var pos = 0
 				for node in franja:
-					#print(node.heur)
 					if node.heur > branch.heur:
-						#print("Position [%d] in %s is best (Compared to %s.)" % [ pos, node.heur, branch.heur ])
 						franja.insert(pos, branch)
 						break
 					pos += 1
 	
 	func search(goal: Vector2i, visits: Array[GRNode], franja: Array[GRNode]) -> PackedVector2Array:
 		# Checa si ya está en la meta.
-		# print(self.pos,goal)
 		if goal == self.pos:
-			#print("goal!")
 			var completedRoute: Array[Vector2] = []
 			var globalPos = GlobalVars.int_mapTile.map_to_local(self.pos)
 			completedRoute.append(globalPos)
@@ -106,7 +92,6 @@ class GRNode:
 				completedRoute.append(pPos)
 				parent = parent.parent
 			#completedRoute.reverse()
-			#print(completedRoute)
 			return PackedVector2Array(completedRoute)
 			
 		# Ok, no estamos en la meta, hay que seguir verificando.
@@ -122,12 +107,10 @@ class GRNode:
 			visits.append(self)
 			self.expand(goal, franja)
 			
-		#print(visits)
 		# Libera cualquier otro nodo posible en el mapa.
 		if not franja.is_empty():
 			return franja.pop_front().search(goal, visits, franja)
 		
-		#print("No results found!")
 		return PackedVector2Array([])
 			
 ##########
@@ -162,7 +145,6 @@ func _process(delta: float):
 		visits.clear()
 		franjas.clear()
 		path = GR_Root.search(pTilePos, visits, franjas)
-		#print(path)
 
 func _physics_process(_delta: float) -> void:
 	if not hasToMove:
@@ -171,16 +153,13 @@ func _physics_process(_delta: float) -> void:
 	# Reinicia la velocidad.
 	velocity = Vector2.ZERO
 	
-	#print(path.size())
 	if path.size() > 0 :
 		var posMove: Vector2 = path[0]
 		var distance = position.distance_to(posMove)
 		if (distance>1):
-			#print(distance)
 			targetPosition = posMove
 			velocity = position.direction_to(posMove) * speed
 		else:
-			#print("removed path")
 			path.remove_at(0)
 			
 	charFace.offset = velocity * .1

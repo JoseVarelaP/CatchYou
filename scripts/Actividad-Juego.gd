@@ -56,6 +56,8 @@ func _ready() -> void:
 	
 	$Jugador.setAllowedToMove(false)
 	
+	await get_tree().create_timer(0.2).timeout
+	
 	for e in enemies:
 		e.setMove(false)
 	

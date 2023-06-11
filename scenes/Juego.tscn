@@ -149,6 +149,18 @@ tracks/9/keys = {
 "update": 0,
 "values": [Vector2(-210.579, 79.8403)]
 }
+tracks/10/type = "value"
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/path = NodePath("transitionIn:color")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(0, 0, 0, 1)]
+}
 
 [sub_resource type="Animation" id="Animation_okcoc"]
 resource_name = "achievedHighScore"
@@ -322,6 +334,30 @@ tracks/3/keys = {
 "update": 1,
 "values": [true, false]
 }
+tracks/4/type = "value"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("../Jugador/Camera2D:zoom")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = {
+"times": PackedFloat32Array(0, 1.1),
+"transitions": PackedFloat32Array(0.267943, 2.2974),
+"update": 0,
+"values": [Vector2(0.5, 0.5), Vector2(1, 1)]
+}
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("transitionIn:color")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_n8n2r"]
 _data = {
@@ -480,6 +516,11 @@ libraries = {
 [node name="Interfaz" type="CanvasLayer" parent="."]
 scale = Vector2(1.002, 1.002)
 transform = Transform2D(1.002, 0, 0, 1.002, 0, 0)
+
+[node name="transitionIn" type="ColorRect" parent="Interfaz"]
+offset_right = 1000.0
+offset_bottom = 1000.0
+color = Color(0, 0, 0, 1)
 
 [node name="FondoPerdida" type="ColorRect" parent="Interfaz"]
 visible = false
