@@ -10,11 +10,14 @@ config_version=5
 
 [application]
 
-config/name="Final-IA"
+config/name="Catch you!"
+config/description="Proyecto final para Introducción a Inteligencia Artificial.
+- Jose_Varela"
 run/main_scene="res://scenes/LogoIntro.tscn"
 config/features=PackedStringArray("4.0", "Mobile")
 boot_splash/show_image=false
-config/icon="res://img/icon.svg"
+config/icon="res://img/program-icon.svg"
+config/macos_native_icon="res://img/program-mac-icon.icns"
 
 [autoload]
 
