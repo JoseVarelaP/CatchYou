@@ -2,6 +2,8 @@
 Enemigo 1
 
 Simplemente realiza un calculo de normalización hacia la dirección del jugador.
+
+Este enemigo implementa el algoritmo Estrella.
 """
 
 extends CharacterBody2D
@@ -16,18 +18,18 @@ var hasToMove: bool = true
 @export var path: PackedVector2Array
 var direction: Vector2 = Vector2(0,0)
 
-@onready var visits : Array[GRNode] = []
-@onready var franjas : Array[GRNode] = []
-var GR_Root: GRNode = null
+@onready var visits : Array[STRNode] = []
+@onready var franjas : Array[STRNode] = []
+var STR_Node: STRNode = null
 
-class GRNode:
+class STRNode:
 	var pos: Vector2i
-	var parent: GRNode
-	var children: Array[GRNode]
+	var parent: STRNode
+	var children: Array[STRNode]
 	var heur: float
 	var weight: int
 	
-	func _init( newpos: Vector2i, parent: GRNode = null ):
+	func _init( newpos: Vector2i, parent: STRNode = null ):
 		self.pos = newpos
 		self.parent = parent
 		self.heur = 0
@@ -51,8 +53,8 @@ class GRNode:
 		var diff: Vector2 = cur - goal
 		return diff.length()
 		
-	func expand(goal: Vector2i, franja: Array[GRNode]) -> void:
-		var new_pos: GRNode = null
+	func expand(goal: Vector2i, franja: Array[STRNode]) -> void:
+		var new_pos: STRNode = null
 		var maxAreaTile: Vector2i = GlobalVars.getPositionTileFromMap( GlobalVars.areaForPlayer )
 		
 		for add in GlobalVars.PossibleLookoutLocations:
@@ -64,7 +66,7 @@ class GRNode:
 			if tempPosition.x > maxAreaTile.x or tempPosition.y > maxAreaTile.y:
 				continue
 			
-			new_pos = GRNode.new( tempPosition, self )
+			new_pos = STRNode.new( tempPosition, self )
 			new_pos.heur = new_pos.h_calc( tempPosition, goal )
 			self.children.append(new_pos)
 			
@@ -80,7 +82,7 @@ class GRNode:
 						break
 					pos += 1
 	
-	func search(goal: Vector2i, visits: Array[GRNode], franja: Array[GRNode]) -> PackedVector2Array:
+	func search(goal: Vector2i, visits: Array[STRNode], franja: Array[STRNode]) -> PackedVector2Array:
 		# Checa si ya está en la meta.
 		if goal == self.pos:
 			var completedRoute: Array[Vector2] = []
@@ -125,8 +127,8 @@ func setMove(state : bool) -> void:
 	hasToMove = state
 	if(state):
 		var pTilePos = getPositionAsTile()
-		GR_Root = GRNode.new(pTilePos)
-		path = GR_Root.search(GlobalVars.getPositionTileFromMap(GlobalVars.curPlayerPosition), visits, franjas)
+		STR_Node = STRNode.new(pTilePos)
+		path = STR_Node.search(GlobalVars.getPositionTileFromMap(GlobalVars.curPlayerPosition), visits, franjas)
 	
 func changeSpeed(level: float) -> void:
 	speed = SPEED_BASE * level
@@ -141,10 +143,10 @@ func _process(delta: float):
 		path.clear()
 		
 	if path.size() == 0:
-		GR_Root = GRNode.new(getPositionAsTile())
+		STR_Node = STRNode.new(getPositionAsTile())
 		visits.clear()
 		franjas.clear()
-		path = GR_Root.search(pTilePos, visits, franjas)
+		path = STR_Node.search(pTilePos, visits, franjas)
 
 func _physics_process(_delta: float) -> void:
 	if not hasToMove:
