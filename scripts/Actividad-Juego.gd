@@ -146,8 +146,8 @@ func _process(delta: float) -> void:
 	GlobalVars.curPlayerPosition = $Jugador.global_position
 	GlobalVars.curPlayerTransform = $Jugador.transform
 	
-	GlobalVars.areaForPlayer += Vector2(delta * 3.0, delta * 3.0)
-	$ReferenceRect.set_size( GlobalVars.areaForPlayer )
+	#GlobalVars.areaForPlayer += Vector2(delta * 3.0, delta * 3.0)
+	#$ReferenceRect.set_size( GlobalVars.areaForPlayer )
 	var pos = getPlayerTilePosition()
 	$Interfaz/speedFactor/ProgressBar.set_value( abs(10 - skillTimer.time_left) )
 	$Jugador/DBGPos.set_text( "%d,%d" % [pos.x,pos.y] )
