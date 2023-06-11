@@ -1,4 +1,4 @@
-[gd_scene load_steps=31 format=3 uid="uid://btfes7gv5do00"]
+[gd_scene load_steps=32 format=3 uid="uid://btfes7gv5do00"]
 
 [ext_resource type="Script" path="res://scripts/Actividad-Juego.gd" id="1_icbs4"]
 [ext_resource type="Script" path="res://scripts/Jugador.gd" id="2_ydlqv"]
@@ -19,8 +19,10 @@
 [ext_resource type="AudioStream" uid="uid://dtoiwfc8qtqh" path="res://sounds/boost-ignition.ogg" id="12_0qrlu"]
 [ext_resource type="PackedScene" uid="uid://mwd57hdeldfa" path="res://scenes/enem_1.tscn" id="14_6vfou"]
 [ext_resource type="PackedScene" uid="uid://bgem34307142l" path="res://scenes/Enem_2.tscn" id="16_0hwcj"]
+[ext_resource type="PackedScene" uid="uid://dxh6np7s25six" path="res://scenes/Enem_3.tscn" id="16_ypi4a"]
 
 [sub_resource type="TileSet" id="TileSet_ebaq8"]
+tile_size = Vector2i(24, 24)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0fdd4"]
 radius = 32.0
@@ -332,12 +334,20 @@ _data = {
 }
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mw3uw"]
+bg_color = Color(0, 0, 0, 1)
 corner_radius_top_left = 8
 corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+shadow_color = Color(1, 1, 1, 0.6)
+shadow_size = 3
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_uncbe"]
+bg_color = Color(0, 0, 0, 1)
 corner_radius_top_right = 30
 corner_radius_bottom_right = 30
+shadow_color = Color(1, 1, 1, 0.6)
+shadow_size = 5
 
 [node name="Juego" type="Node2D"]
 script = ExtResource("1_icbs4")
@@ -392,7 +402,6 @@ position_smoothing_speed = 10.0
 metadata/_edit_lock_ = true
 
 [node name="DBGPos" type="Label" parent="Jugador"]
-visible = false
 offset_left = -24.0
 offset_top = -56.0
 offset_right = 35.0
@@ -460,6 +469,8 @@ show_percentage = false
 
 [node name="Enemigo2" parent="." groups=["enemy"] instance=ExtResource("16_0hwcj")]
 
+[node name="Enemigo3" parent="." groups=["enemy"] instance=ExtResource("16_ypi4a")]
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 root_node = NodePath("../Interfaz")
 libraries = {
@@ -510,9 +521,9 @@ metadata/_edit_lock_ = true
 clip_contents = false
 layout_mode = 0
 offset_left = 0.998016
-offset_top = 4.98993
+offset_top = 7.98395
 offset_right = 88.998
-offset_bottom = 44.9899
+offset_bottom = 47.9839
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 0
 theme_override_constants/shadow_offset_y = 4
@@ -521,7 +532,6 @@ theme_override_font_sizes/normal_font_size = 24
 bbcode_enabled = true
 text = "[p align=center][wave amp=60.0 freq=8.0]1.00x[/wave][/p]"
 shortcut_keys_enabled = false
-metadata/_edit_lock_ = true
 
 [node name="ProgressBar" type="ProgressBar" parent="Interfaz/speedFactor"]
 modulate = Color(0, 1, 0.647059, 1)
@@ -636,9 +646,9 @@ theme_override_styles/panel = SubResource("StyleBoxFlat_uncbe")
 [node name="text" type="RichTextLabel" parent="Interfaz/HighScorePanel"]
 clip_contents = false
 layout_mode = 0
-offset_top = -5.96806
+offset_top = -0.978046
 offset_right = 200.0
-offset_bottom = 34.0319
+offset_bottom = 39.0219
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_y = 0
 theme_override_constants/shadow_outline_size = 8

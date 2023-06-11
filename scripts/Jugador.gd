@@ -82,7 +82,7 @@ func calculateBoost(delta: float, btnEnable: bool) -> void:
 		return
 			
 	if( boostEnabled ):
-		print(boostAmmount)
+		#print(boostAmmount)
 		SPEED = 600
 		curBoostSpeed = 4.0
 		boostParticle.get_process_material().set_gravity(

@@ -19,8 +19,6 @@ extends Node2D
 @onready var skillTimer = $nextLevelTimer
 @onready var BPMTimer = $BPMTimer
 
-@onready var enemy = $Enem1
-
 const BPM: float = 60.0/140.5
 var curShakeStrength: float = 0.0
 
@@ -41,7 +39,11 @@ var UltimoTiempo: float = 0.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	set_process(true)
+	GlobalVars.curPlayerPosition = $Jugador.global_position
+	GlobalVars.curPlayerTransform = $Jugador.transform
 	GlobalVars.playerHit.connect(_onPlayerHit)
+	GlobalVars.connectMap($GridMap)
 	rand.randomize()
 	UltimoTiempo = saveFile.loadfile()
 	ogSpeedLabelPos = speedCont.position
@@ -50,10 +52,9 @@ func _ready() -> void:
 	# Posiciona los oponentes.
 	enemies[0].position = Vector2(100,200)
 	enemies[1].position = Vector2(GlobalVars.areaForPlayer.x - 100,200)
+	enemies[2].position = Vector2(GlobalVars.areaForPlayer.x - 100,500)
 	
 	$Jugador.setAllowedToMove(false)
-	
-	print(enemies)
 	
 	for e in enemies:
 		e.setMove(false)
@@ -71,7 +72,6 @@ func beginGame() -> void:
 	BPMTimer.start(BPM)
 	$Jugador.setAllowedToMove(true)
 	for e in enemies:
-		print(e)
 		e.setMove(true)
 		
 	#$Enem1.setMove(true)
@@ -90,7 +90,7 @@ func getRandomCameraOffset() -> Vector2:
 	
 func getPlayerTilePosition() -> Vector2i:
 	var pos = $GridMap.local_to_map( $Jugador.global_position ) as Vector2i
-	return pos
+	return GlobalVars.getPlayerPositionFromMap($Jugador)
 	
 func actionLoseGame() -> void:
 	# Marca el juego como terminado, para evitar que el jugador y los elementos sean
@@ -125,6 +125,7 @@ func actionLoseGame() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
+	queue_redraw()
 	if( curShakeStrength > 0.0 ):
 		curShakeStrength = lerp(curShakeStrength, 0.0, ShakeDecay * delta)
 		camera.offset = getRandomCameraOffset()
@@ -141,12 +142,13 @@ func _process(delta: float) -> void:
 		return
 		
 	GlobalVars.curPlayerPosition = $Jugador.global_position
+	GlobalVars.curPlayerTransform = $Jugador.transform
 	
 	GlobalVars.areaForPlayer += Vector2(delta * 3.0, delta * 3.0)
 	$ReferenceRect.set_size( GlobalVars.areaForPlayer )
-	#var pos = getPlayerTilePosition()
+	var pos = getPlayerTilePosition()
 	$Interfaz/speedFactor/ProgressBar.set_value( abs(10 - skillTimer.time_left) )
-	#$Jugador/DBGPos.set_text( "%d,%d" % [pos.x,pos.y] )
+	$Jugador/DBGPos.set_text( "%d,%d" % [pos.x,pos.y] )
 		
 	# Suma el tiempo actual a lo que esta.
 	tiempoTotal += delta
@@ -156,6 +158,15 @@ func _process(delta: float) -> void:
 	if( not highScoreAchieved and tiempoTotal > UltimoTiempo ):
 		highScoreAchieved = true
 		showHighScore()
+		
+func _draw():
+	for e in enemies:
+		if e.path:
+			# Dibuja los caminos de los oponentes a la pantalla.
+			# No deberia dibujarlos por que revelan adonde irá el oponente, pero es necesario
+			# para demostrar el proyecto.
+			draw_polyline(e.path, e.get_node("char").modulate)
+			#draw_line(e.position, e.targetPosition, e.get_node("char").modulate, 1)
 		
 func showHighScore() -> void:
 	# Solo muestra la alta puntuación cuando es mayor de 0.

@@ -1,8 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://bgem34307142l"]
+[gd_scene load_steps=7 format=3 uid="uid://dxh6np7s25six"]
 
-[ext_resource type="Script" path="res://scripts/Enem2.gd" id="1_1cv51"]
-[ext_resource type="Texture2D" uid="uid://eyncryuv70" path="res://img/Ent-base.svg" id="1_bvvdf"]
-[ext_resource type="Texture2D" uid="uid://dgjfa2sxrrv3n" path="res://img/enem-face.svg" id="2_quoja"]
+[ext_resource type="Script" path="res://scripts/Enem3.gd" id="1_14ixy"]
+[ext_resource type="Texture2D" uid="uid://eyncryuv70" path="res://img/Ent-base.svg" id="2_00r10"]
+[ext_resource type="Texture2D" uid="uid://dgjfa2sxrrv3n" path="res://img/enem-face.svg" id="3_80xwh"]
+[ext_resource type="Material" uid="uid://fc2odsr83xrp" path="res://particles/BoostParticle.tres" id="4_l3m25"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_jdnop"]
 size = Vector2(64, 64)
@@ -11,7 +12,7 @@ size = Vector2(64, 64)
 size = Vector2(56, 56)
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
-script = ExtResource("1_1cv51")
+script = ExtResource("1_14ixy")
 
 [node name="Area2D" type="Area2D" parent="."]
 
@@ -19,21 +20,26 @@ script = ExtResource("1_1cv51")
 shape = SubResource("RectangleShape2D_jdnop")
 
 [node name="char" type="Sprite2D" parent="."]
-modulate = Color(0, 1, 0, 1)
+modulate = Color(1, 1, 0, 1)
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("1_bvvdf")
+texture = ExtResource("2_00r10")
 
-[node name="enemyBlock" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_210gt")
 
 [node name="face" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_quoja")
+texture = ExtResource("3_80xwh")
 
 [node name="TiempoExp" type="Timer" parent="."]
 
 [node name="timeBeforeShrink" type="Timer" parent="."]
 one_shot = true
+
+[node name="boost" type="GPUParticles2D" parent="."]
+emitting = false
+amount = 140
+process_material = ExtResource("4_l3m25")
 
 [connection signal="timeout" from="TiempoExp" to="." method="_on_tiempo_exp_timeout"]
 [connection signal="timeout" from="timeBeforeShrink" to="." method="_enemyNeedsToShrink"]

@@ -5,9 +5,10 @@
 [ext_resource type="Texture2D" uid="uid://dgjfa2sxrrv3n" path="res://img/enem-face.svg" id="3_7wyoe"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_r6ce1"]
-size = Vector2(64, 60)
+size = Vector2(64, 64)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ookth"]
+size = Vector2(56, 56)
 
 [node name="Enemigo1" type="CharacterBody2D" groups=["enemy"]]
 script = ExtResource("1_oy84j")
@@ -18,7 +19,7 @@ metadata/_edit_group_ = true
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource("RectangleShape2D_r6ce1")
 
-[node name="spr" type="Sprite2D" parent="."]
+[node name="char" type="Sprite2D" parent="."]
 modulate = Color(1, 0, 0, 1)
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_1mjmv")
@@ -30,3 +31,5 @@ shape = SubResource("RectangleShape2D_ookth")
 [node name="face" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.5)
 texture = ExtResource("3_7wyoe")
+
+[node name="DEBUG-Busqueda" type="Line2D" parent="."]
