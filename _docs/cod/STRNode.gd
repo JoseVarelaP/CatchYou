@@ -1,27 +1,3 @@
-"""
-Enemigo 1
-
-Simplemente realiza un calculo de normalización hacia la dirección del jugador.
-
-Este enemigo implementa el algoritmo Estrella.
-"""
-
-extends CharacterBody2D
-
-const SPEED_BASE: float = 120.0
-var speed: float = SPEED_BASE
-@onready var charFace: Sprite2D = $face
-@export var targetPosition: Vector2 = Vector2(0.0,0.0)
-var hasToMove: bool = true
-
-##########
-@export var path: PackedVector2Array
-var direction: Vector2 = Vector2(0,0)
-
-@onready var visits : Array[STRNode] = []
-@onready var franjas : Array[STRNode] = []
-var STR_Node: STRNode = null
-
 class STRNode:
 	var pos: Vector2i
 	var parent: STRNode
@@ -47,8 +23,8 @@ class STRNode:
 		var res = self.weight + self.h_calc(cur, goal)
 		return res
 		
-	# Calcula la distancia. Para esta ocasión, solamente detecta la distancia posible y más cercana
-	# al jugador, y aplica el valor. El que tenga menor valor, tendrá mejor prioridad.
+	# Calcula la distancia. Para esta ocasion, solamente detecta la distancia posible y mas cercana
+	# al jugador, y aplica el valor. El que tenga menor valor, tendra mejor prioridad.
 	func h_calc(cur: Vector2i, goal: Vector2i) -> float:
 		var diff: Vector2 = cur - goal
 		return diff.length()
@@ -60,7 +36,7 @@ class STRNode:
 		for add in GlobalVars.PossibleLookoutLocations:
 			var tempPosition: Vector2i = self.pos + add
 			
-			# Evita que el bloque a buscar se salga del mapa.
+            # Evita que el bloque a buscar se salga del mapa.
 			if tempPosition.x < 0 or tempPosition.y < 0:
 				continue
 			
@@ -84,7 +60,7 @@ class STRNode:
 					pos += 1
 	
 	func search(goal: Vector2i, visits: Array[STRNode], franja: Array[STRNode]) -> PackedVector2Array:
-		# Checa si ya está en la meta.
+		# Checa si ya esta en la meta.
 		if goal == self.pos:
 			var completedRoute: Array[Vector2] = []
 			var globalPos = GlobalVars.int_mapTile.map_to_local(self.pos)
@@ -115,59 +91,40 @@ class STRNode:
 			return franja.pop_front().search(goal, visits, franja)
 		
 		return PackedVector2Array([])
-			
-##########
 
 func getPositionAsTile() -> Vector2i:
-	return GlobalVars.getPositionTileFromMap(global_position)
+    return GlobalVars.getPositionTileFromMap(global_position)
 
-func _ready():
-	$Area2D.connect("body_entered", _on_area_2d_body_entered)
-
-func setMove(state : bool) -> void:
-	hasToMove = state
-	if(state):
-		var pTilePos = getPositionAsTile()
-		STR_Node = STRNode.new(pTilePos)
-		path = STR_Node.search(GlobalVars.getPositionTileFromMap(GlobalVars.curPlayerPosition), visits, franjas)
-	
-func changeSpeed(level: float) -> void:
-	speed = SPEED_BASE * level
-	
 func _process(delta: float):
-	if not hasToMove:
-		return
-		
-	# Si el jugador ha cambiado de posición donde estaba la meta, vuelve a calcular.
-	var pTilePos = GlobalVars.getPositionTileFromMap(GlobalVars.curPlayerPosition)
-	if Vector2(pTilePos) != targetPosition and path.size() > 0:
-		path.clear()
-		
-	if path.size() == 0:
-		STR_Node = STRNode.new(getPositionAsTile())
-		visits.clear()
-		franjas.clear()
-		path = STR_Node.search(pTilePos, visits, franjas)
+    if not hasToMove:
+        return
+        
+    # Si el jugador ha cambiado de posicion donde estaba la meta, vuelve a calcular.
+    var pTilePos = GlobalVars.getPositionTileFromMap(GlobalVars.curPlayerPosition)
+    if Vector2(pTilePos) != targetPosition and path.size() > 0:
+        path.clear()
+        
+    if path.size() == 0:
+        STR_Node = STRNode.new(getPositionAsTile())
+        visits.clear()
+        franjas.clear()
+        path = STR_Node.search(pTilePos, visits, franjas)
 
 func _physics_process(_delta: float) -> void:
-	if not hasToMove:
-		return
-		
-	# Reinicia la velocidad.
-	velocity = Vector2.ZERO
-	
-	if path.size() > 0 :
-		var posMove: Vector2 = path[0]
-		var distance = position.distance_to(posMove)
-		if (distance>1):
-			targetPosition = posMove
-			velocity = position.direction_to(posMove) * speed
-		else:
-			path.remove_at(0)
-			
-	charFace.offset = velocity * .1
-	move_and_slide()
-
-func _on_area_2d_body_entered(body):
-	if body.is_in_group("player"):
-		GlobalVars.emit_signal("playerHit")
+    if not hasToMove:
+        return
+        
+    # Reinicia la velocidad.
+    velocity = Vector2.ZERO
+    
+    if path.size() > 0 :
+        var posMove: Vector2 = path[0]
+        var distance = position.distance_to(posMove)
+        if (distance>1):
+            targetPosition = posMove
+            velocity = position.direction_to(posMove) * speed
+        else:
+            path.remove_at(0)
+            
+    charFace.offset = velocity * .1
+    move_and_slide()

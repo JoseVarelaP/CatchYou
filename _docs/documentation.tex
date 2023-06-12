@@ -26,7 +26,8 @@
     % Reserved words
     morekeywords = [1]{
         func, var, return, while, for, in, if, self, break, new,
-        continue, signal, not, bool, false, true, void, null, const
+        continue, signal, not, bool, false, true, void, null, const,
+        class, float, int
     },
     % Variable types
     morekeywords = [2]{
@@ -38,9 +39,11 @@
         Array,
         PackedVector2Array,
         TileMap,
+        String,
         % Custom nodes for the game
         BPSNode,
         GRNode,
+        STRNode,
         \$Jugador,
         \$Interfaz
     },
@@ -48,6 +51,10 @@
     morekeywords = [3] {
         somethingerfhru,
         local_to_map,
+        map_to_local,
+        pop_front,
+        search,
+        getPositionAsTile,
         append,
         is_empty,
         loadfile,
@@ -64,7 +71,15 @@
         save,
         set_text,
         failPlayer,
-        applyShake
+        applyShake,
+        h_calc,
+        length,
+        getPositionTileFromMap,
+        has,
+        expand,
+        clear,
+        distance_to,
+        size
     },
     keywordstyle = [1]\color{codered},
     keywordstyle = [2]\color{codegreen},
@@ -194,6 +209,8 @@ llamará la función \_onPlayerHit(), que subsequentemente llamará actionLoseGa
 
 El cubo rojo contiene la actividad más básica, donde solamente busca la ubicación del jugador por medio del algoritmo Estrella.
 
+\lstinputlisting[caption = Algoritmo del enemigo rojo]{cod/STRNode.gd}
+
 \subsection{Verde}
 
 \includegraphics[width = 20mm]{_enem-verde.png}
@@ -203,6 +220,10 @@ El cubo verde también busca la ubicación del jugador, pero utiliza el método 
 A diferencia del rojo, el cubo verde contiene la habilidad de expandirse después de un tiempo determinado para bloquear
 el paso al jugador. Esto puede ser un obstaculo, pero al mismo tiempo puede ser una mecánica a su favor, ya que
 el jugador puede utilizar este mismo bloqueo a los otros enemigos, cortandoles el paso y dejandolo escapar.
+
+\lstinputlisting[caption = Algoritmo del enemigo verde]{cod/GRNode.gd}
+
+\lstinputlisting[caption = Funcionalidad de habilidad del enemigo verde.]{cod/Enem2-habilidad.gd}
 
 \subsection{Amarillo}
 
@@ -216,6 +237,8 @@ Este cubo utiliza el algoritmo BPA, también conocido como "Breadth-First Search
 Dado la manera que fue enseñada este algoritmo, se realizaron cambios que permiten el procedimiento del algoritmo para evitar el problema
 con Godot limitando a 1024 el tamaño del stack en una llamada.
 
+\lstinputlisting[caption = Algoritmo del enemigo amarillo]{cod/BFSNode.gd}
+
 \subsection{Naranja}
 
 \includegraphics[width = 20mm]{_enem-naranja.png}
@@ -225,6 +248,8 @@ Este cubo utiliza el algoritmo BPP, también conocido como "Depth-First Search",
 En la versión actual de "Catch You!", el cubo naranja contiene la misma habilidad que el cubo amarillo.
 En una actualización futura, se implementará su habilidad especial que permite saltar del mapa y caer en otra posición
 aleatoria o calculada por el mismo algoritmo para sorprender al jugador en su trama.
+
+\lstinputlisting[caption = Algoritmo del enemigo naranja]{cod/DFSNode.gd}
 
 \subsection{Conversión para algoritmos BPA y BPP}
 
@@ -241,7 +266,7 @@ disponible de bloques en el mapa.
 Cada elemento es analizado al diccionario de elementos visitados. Si el elemento no ha sido visitado, se genera los nodos adyacentes y se agregan
 al stack para ser procesados.
 
-\lstinputlisting[caption = Codigo de busqueda de busqueda del enemigo 3 y 4.]{cod/bps-code.gd}
+\lstinputlisting[caption = Codigo de busqueda de busqueda del enemigo amarillo y naranja.]{cod/bps-code.gd}
 
 \section{Procesamiento de posiciones}
 
@@ -253,7 +278,7 @@ La clase de GlobalVars contiene una función que realiza esta acción.
 Cada enemigo también proveé su posición basado en la cuadrícula, lo que facilita el calculo de los algoritmos por la facilidad de posicionamiento, en vez de calcular
 cada número flotante que sea remotamente posible en el area alrededor del enemigo.
 
-\lstinputlisting[caption = Codigo de expansion de busqueda del enemigo 2 (Greedy).]{cod/expand-greedy.gd}
+\lstinputlisting[caption = Codigo de expansion de busqueda del enemigo verde (Greedy).]{cod/expand-greedy.gd}
 
 \section{Limitaciones}
 
