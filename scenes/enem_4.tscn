@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=3 uid="uid://cy5lhb3240ec5"]
+
+[ext_resource type="Script" path="res://scripts/Enem4.gd" id="1_pnojs"]
+[ext_resource type="Texture2D" uid="uid://eyncryuv70" path="res://img/Ent-base.svg" id="2_5jvv3"]
+[ext_resource type="Texture2D" uid="uid://dgjfa2sxrrv3n" path="res://img/enem-face.svg" id="3_q3fmk"]
+[ext_resource type="Material" uid="uid://fc2odsr83xrp" path="res://particles/BoostParticle.tres" id="4_4ftu0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7aiuk"]
+size = Vector2(56, 56)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ktb3w"]
+size = Vector2(64, 64)
+
+[node name="Enem4" type="CharacterBody2D"]
+script = ExtResource("1_pnojs")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_7aiuk")
+
+[node name="enemyBlock" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_ktb3w")
+
+[node name="char" type="Sprite2D" parent="."]
+modulate = Color(1, 0.505882, 0.52549, 1)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_5jvv3")
+
+[node name="face" type="Sprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_q3fmk")
+
+[node name="TiempoExp" type="Timer" parent="."]
+
+[node name="timeBeforeShrink" type="Timer" parent="."]
+
+[node name="boost" type="GPUParticles2D" parent="."]
+emitting = false
+process_material = ExtResource("4_4ftu0")
+
+[connection signal="timeout" from="TiempoExp" to="." method="_on_tiempo_exp_timeout"]
+[connection signal="timeout" from="timeBeforeShrink" to="." method="_enemyNeedsToShrink"]

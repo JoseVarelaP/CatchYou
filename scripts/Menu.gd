@@ -6,10 +6,10 @@ var saveFile: saveFileManager = saveFileManager.new()
 var Tiempo: TiempoCalc = TiempoCalc.new()
 
 func _ready():
-	$anims.play("transitionIn")
+	$anims.play("MenuTransitions/transitionIn")
 
 func _on_inicio_juego_button_up() -> void:
-	$anims.play("transitionOut")
+	$anims.play("MenuTransitions/transitionOut")
 	await get_tree().create_timer(1).timeout
 	
 	print_debug("[MainMenu] Cambiando escena")
@@ -28,3 +28,13 @@ func _on_tiempo_record_ready() -> void:
 
 func _on_inicio_juego_pressed() -> void:
 	_on_inicio_juego_button_up()
+
+func _on_salir_pressed():
+	_on_salir_button_up()
+
+func _on_acerca_button_up():
+	$anims.play("MenuTransitions/transitionOut")
+	await get_tree().create_timer(1).timeout
+	
+	print_debug("[MainMenu] Cambiando escena")
+	get_tree().change_scene_to_file("res://scenes/Acerca.tscn")

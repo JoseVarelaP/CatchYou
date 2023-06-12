@@ -2,6 +2,11 @@
 
 [resource]
 skew = Vector2(0.25, 2.08165e-12)
+border_width_left = 8
+border_width_top = 8
+border_width_right = 8
+border_width_bottom = 8
+border_blend = true
 corner_radius_top_left = 20
 corner_radius_top_right = 20
 corner_radius_bottom_right = 20

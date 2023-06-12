@@ -53,6 +53,7 @@ func _ready() -> void:
 	enemies[0].position = Vector2(100,200)
 	enemies[1].position = Vector2(GlobalVars.areaForPlayer.x - 100,200)
 	enemies[2].position = Vector2(GlobalVars.areaForPlayer.x - 100,500)
+	enemies[3].position = Vector2(100,500)
 	
 	$Jugador.setAllowedToMove(false)
 	

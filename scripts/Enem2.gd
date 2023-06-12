@@ -188,30 +188,6 @@ func _physics_process(delta: float) -> void:
 	charFace.offset = velocity * .1
 	move_and_slide()
 	
-	"""
-	# Obten la posición normalizada en X del oponente basada en el jugador.
-	var diff = getTransformedDifferenceToPlayer()
-	var direction = diff.normalized()
-	var distance = diff.length()
-	
-	# print(direction, distance)
-	
-	var tmpTarget: Vector2 = Vector2(GlobalVars.curPlayerPosition)
-	if distance > 300:
-		#print("left side")
-		speed = SPEED_BASE
-		tmpTarget += direction*200
-	else:
-		speed = 200
-		tmpTarget += direction*200
-	
-	targetPosition = tmpTarget
-	velocity = position.direction_to(targetPosition) * speed
-	
-	charFace.offset = velocity * .1
-	move_and_slide()
-	"""
-	
 func _on_area_2d_body_entered(body):
 	if body.is_in_group("player"):
 		GlobalVars.emit_signal("playerHit")

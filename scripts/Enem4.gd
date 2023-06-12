@@ -1,11 +1,13 @@
 """
-Enemigo 3
-
-Simplemente realiza un calculo de normalización hacia la dirección del jugador.
+Enemigo 4
 
 Este enemigo tiene la habilidad de ir rápido por unos segundos.
 
-Este enemigo implementa la Busqueda Breadth-First (BFS), pero en una iteración no recursiva,
+TODO: Tengo la idea de implementar el oponente con un salto y caida a un lugar
+al azar en el mapa. Pero no tengo tiempo para implementarlo antes de la entrega,
+asi que utilizaré la misma habilidad de Enem3.
+
+Este enemigo implementa la Busqueda First in Depth (DFS), pero en una iteración no recursiva,
 dado que Godot no permite una pila de mas de 1024 elementos.
 """
 
@@ -42,17 +44,17 @@ var direction: Vector2 = Vector2(0,0)
 const distanceMargin: Vector2i = Vector2i(15,15)
 
 @onready var visits : Dictionary = {}
-@onready var franjas : Array[BPSNode] = []
-var BPS_Root: BPSNode = null
+@onready var franjas : Array[DFSNode] = []
+var NodeRoot: DFSNode = null
 ##########
 
-class BPSNode:
+class DFSNode:
 	var pos: Vector2i
-	var children: Array[BPSNode]
-	var parent: BPSNode
+	var children: Array[DFSNode]
+	var parent: DFSNode
 	var visited: bool = false
 	
-	func _init(pos: Vector2i, parent: BPSNode = null):
+	func _init(pos: Vector2i, parent: DFSNode = null):
 		self.pos = pos
 		self.parent = parent
 		self.children = []
@@ -60,8 +62,8 @@ class BPSNode:
 	func _to_string() -> String:
 		return "(%d, %d)" % [pos.x, pos.y]
 		
-	func expand(goal: Vector2i, franja: Array[BPSNode]) -> void:
-		var new_pos: BPSNode = null
+	func expand(goal: Vector2i, franja: Array[DFSNode]) -> void:
+		var new_pos: DFSNode = null
 		var maxAreaTile: Vector2i = GlobalVars.getPositionTileFromMap( GlobalVars.areaForPlayer )
 		var pTilePos = GlobalVars.getPositionTileFromMap(GlobalVars.curPlayerPosition)
 		
@@ -76,17 +78,19 @@ class BPSNode:
 			or tempPosition.y > maxAreaTile.y or tempPosition.y > pTilePos.y+distanceMargin.y:
 				continue
 			
-			new_pos = BPSNode.new( tempPosition, self )
+			new_pos = DFSNode.new( tempPosition, self )
 			self.children.append(new_pos)
 			
 		# Agrega los elementos generados a la franja, para ser analizados.
 		for branch in self.children:
-			franja.append(branch)
+			var pos = 0
+			franja.insert(pos, branch)
+			pos += 1
 	
 	# TODO: Cuando el jugador se aleja de este oponente, el juego se ralentiza exponencialmente.
 	# Averigua como resolver esto.
 	# Con diccionarios funciona mejor, pero el problem persiste.	
-	func search(goal: Vector2i, visits: Dictionary, franja: Array[BPSNode]) -> PackedVector2Array:
+	func search(goal: Vector2i, visits: Dictionary, franja: Array[DFSNode]) -> PackedVector2Array:
 		var stack = []
 		stack.append(self)
 		while len(stack) != 0:
@@ -138,10 +142,10 @@ func _process(delta: float) -> void:
 		path.clear()
 		
 	if path.size() == 0:
-		BPS_Root = BPSNode.new(getPositionAsTile())
+		NodeRoot = DFSNode.new(getPositionAsTile())
 		visits.clear()
 		franjas.clear()
-		path = BPS_Root.search(pTilePos, visits, franjas)
+		path = NodeRoot.search(pTilePos, visits, franjas)
 
 func _physics_process(delta: float) -> void:
 	if not hasToMove:

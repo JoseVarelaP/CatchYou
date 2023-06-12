@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dsg83rfsde2wp"]
+[gd_scene load_steps=14 format=3 uid="uid://dsg83rfsde2wp"]
 
 [ext_resource type="Script" path="res://scripts/Menu.gd" id="1_ggoxk"]
 [ext_resource type="FontFile" uid="uid://bsg7t5g7b0kqv" path="res://Gosrokan.otf" id="2_hctws"]
@@ -7,6 +7,7 @@
 [ext_resource type="StyleBox" uid="uid://tqtcfqm07ue8" path="res://EST-Boton.tres" id="3_3pjkf"]
 [ext_resource type="StyleBox" uid="uid://pdto5gafe0tl" path="res://EST-BotonHover.tres" id="4_ewm5j"]
 [ext_resource type="StyleBox" uid="uid://cgy7vdqjw3tj" path="res://EST-BotonPresionado.tres" id="5_iatde"]
+[ext_resource type="AnimationLibrary" uid="uid://dp6kwk3alyoph" path="res://animations/MenuTransitions.res" id="8_rm2nk"]
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_juqql"]
 emission_shape = 6
@@ -22,117 +23,11 @@ action = &"start_game"
 [sub_resource type="Shortcut" id="Shortcut_b5x3w"]
 events = [SubResource("InputEventAction_eaolk")]
 
-[sub_resource type="Animation" id="Animation_fn11h"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ColorRect:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Color(0, 0, 0, 1)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("MarginContainer:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector2(0.5, 0.5)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("ColorRect:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
+[sub_resource type="InputEventAction" id="InputEventAction_ewgfm"]
+action = &"quit_game"
 
-[sub_resource type="Animation" id="Animation_ldprv"]
-resource_name = "transitionIn"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ColorRect:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.6),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0, 0, 0, 1), Color(0, 0, 0, 0)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("MarginContainer:scale")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.5),
-"transitions": PackedFloat32Array(0.287175, 4.28709),
-"update": 0,
-"values": [Vector2(0.5, 0.5), Vector2(1, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("ColorRect:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 0.6),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-
-[sub_resource type="Animation" id="Animation_bgpfp"]
-resource_name = "transitionOut"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ColorRect:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.6),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, true]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("ColorRect:color")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.6),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Color(0, 0, 0, 0), Color(0, 0, 0, 1)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_u78fv"]
-_data = {
-"RESET": SubResource("Animation_fn11h"),
-"transitionIn": SubResource("Animation_ldprv"),
-"transitionOut": SubResource("Animation_bgpfp")
-}
+[sub_resource type="Shortcut" id="Shortcut_vr4fs"]
+events = [SubResource("InputEventAction_ewgfm")]
 
 [node name="mainMenu" type="Node2D"]
 script = ExtResource("1_ggoxk")
@@ -147,77 +42,71 @@ position = Vector2(630, 493)
 amount = 300
 process_material = ExtResource("2_k4aug")
 
-[node name="MarginContainer" type="MarginContainer" parent="."]
-offset_left = 1.738
-offset_right = 801.738
-offset_bottom = 600.0
-scale = Vector2(0.5, 0.5)
-pivot_offset = Vector2(400, 300)
-theme_override_constants/margin_left = 90
-theme_override_constants/margin_right = 90
-
-[node name="Contenido Juego" type="VBoxContainer" parent="MarginContainer"]
-layout_mode = 2
-
-[node name="Sprite2D" type="Sprite2D" parent="MarginContainer/Contenido Juego"]
-position = Vector2(314, 180)
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(405.738, 180)
 scale = Vector2(0.8, 0.8)
 texture = ExtResource("2_ljqgb")
 
-[node name="Label" type="Label" parent="MarginContainer/Contenido Juego"]
-layout_mode = 2
+[node name="Label" type="Label" parent="."]
+offset_left = 91.738
+offset_right = 711.738
+offset_bottom = 600.0
 size_flags_vertical = 3
 theme_override_fonts/font = ExtResource("2_hctws")
 theme_override_font_sizes/font_size = 128
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/Contenido Juego"]
-layout_mode = 2
-size_flags_vertical = 3
-size_flags_stretch_ratio = 0.57
-theme_override_constants/separation = 20
-
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/Contenido Juego/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/margin_left = 50
-theme_override_constants/margin_right = 50
-
-[node name="InicioJuego" type="Button" parent="MarginContainer/Contenido Juego/VBoxContainer/MarginContainer"]
-layout_mode = 2
+[node name="InicioJuego" type="Button" parent="."]
+offset_left = 64.0
+offset_top = 368.0
+offset_right = 324.0
+offset_bottom = 458.0
+pivot_offset = Vector2(130, 45)
 focus_mode = 0
 theme_override_fonts/font = ExtResource("2_hctws")
-theme_override_font_sizes/font_size = 60
+theme_override_font_sizes/font_size = 42
 theme_override_styles/normal = ExtResource("3_3pjkf")
 theme_override_styles/hover = ExtResource("4_ewm5j")
 theme_override_styles/pressed = ExtResource("5_iatde")
 shortcut = SubResource("Shortcut_b5x3w")
 text = "Nuevo Juego"
 
-[node name="MarginContainer2" type="MarginContainer" parent="MarginContainer/Contenido Juego/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_constants/margin_left = 50
-theme_override_constants/margin_right = 50
-
-[node name="Salir" type="Button" parent="MarginContainer/Contenido Juego/VBoxContainer/MarginContainer2"]
-layout_mode = 2
+[node name="Acerca" type="Button" parent="."]
+offset_left = 464.0
+offset_top = 368.0
+offset_right = 724.0
+offset_bottom = 458.0
+pivot_offset = Vector2(130, 45)
 focus_mode = 0
 theme_override_fonts/font = ExtResource("2_hctws")
-theme_override_font_sizes/font_size = 60
+theme_override_font_sizes/font_size = 42
 theme_override_styles/normal = ExtResource("3_3pjkf")
 theme_override_styles/hover = ExtResource("4_ewm5j")
 theme_override_styles/pressed = ExtResource("5_iatde")
+text = "Acerca"
+
+[node name="Salir" type="Button" parent="."]
+offset_left = 328.0
+offset_top = 493.0
+offset_right = 478.0
+offset_bottom = 563.0
+pivot_offset = Vector2(75, 35)
+focus_mode = 0
+theme_override_fonts/font = ExtResource("2_hctws")
+theme_override_font_sizes/font_size = 36
+theme_override_styles/normal = ExtResource("3_3pjkf")
+theme_override_styles/hover = ExtResource("4_ewm5j")
+theme_override_styles/pressed = ExtResource("5_iatde")
+shortcut = SubResource("Shortcut_vr4fs")
 text = "Salir
 "
 
-[node name="Copyright" type="VBoxContainer" parent="MarginContainer/Contenido Juego"]
-layout_mode = 2
-theme_override_constants/separation = 0
-
-[node name="InfoCR" type="Label" parent="MarginContainer/Contenido Juego/Copyright"]
-layout_mode = 2
+[node name="InfoCR" type="Label" parent="."]
+offset_left = 91.738
+offset_top = 568.0
+offset_right = 711.738
+offset_bottom = 594.0
 text = "2023, Jose_Varela"
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -248,10 +137,12 @@ color = Color(0, 0, 0, 1)
 
 [node name="anims" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_u78fv")
+"MenuTransitions": ExtResource("8_rm2nk")
 }
 
-[connection signal="button_up" from="MarginContainer/Contenido Juego/VBoxContainer/MarginContainer/InicioJuego" to="." method="_on_inicio_juego_button_up"]
-[connection signal="pressed" from="MarginContainer/Contenido Juego/VBoxContainer/MarginContainer/InicioJuego" to="." method="_on_inicio_juego_pressed"]
-[connection signal="button_up" from="MarginContainer/Contenido Juego/VBoxContainer/MarginContainer2/Salir" to="." method="_on_salir_button_up"]
+[connection signal="button_up" from="InicioJuego" to="." method="_on_inicio_juego_button_up"]
+[connection signal="pressed" from="InicioJuego" to="." method="_on_inicio_juego_pressed"]
+[connection signal="button_up" from="Acerca" to="." method="_on_acerca_button_up"]
+[connection signal="button_up" from="Salir" to="." method="_on_salir_button_up"]
+[connection signal="pressed" from="Salir" to="." method="_on_salir_pressed"]
 [connection signal="ready" from="TiempoRecord" to="." method="_on_tiempo_record_ready"]
