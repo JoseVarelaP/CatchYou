@@ -1,3 +1,7 @@
+Gameplay music:
+Freedom (From Turrican 2 - syphus/bdse reinterpretation)
+https://syphus.untergrund.net/mods/syphus-freedomcover.hvl
+
 player_hit:
 Damage Sound effect by Raclure of Freesound.org
 https://freesound.org/people/Raclure/sounds/458867/#
