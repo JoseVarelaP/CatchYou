@@ -17,6 +17,9 @@ const PossibleLookoutLocations = [
 	#Vector2i(-1,-0),
 ]
 
+func _ready():
+	print("uhie")
+
 func getPlayerPositionFromMap( Jugador: CharacterBody2D ) -> Vector2i:
 	var pos = int_mapTile.local_to_map( Jugador.global_position ) as Vector2i
 	return pos
@@ -32,4 +35,5 @@ func connectMap( Map: TileMap ) -> bool:
 	int_mapTile = Map
 	return true
 
+signal windowResize
 signal playerHit

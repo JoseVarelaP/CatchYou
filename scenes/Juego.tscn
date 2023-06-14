@@ -526,8 +526,10 @@ color = Color(0, 0, 0, 1)
 
 [node name="FondoPerdida" type="ColorRect" parent="Interfaz"]
 visible = false
-offset_right = 800.0
-offset_bottom = 600.0
+anchors_preset = -1
+anchor_right = 0.998
+anchor_bottom = 1.0
+offset_right = 1.59998
 color = Color(0.12549, 0.12549, 0.12549, 0.709804)
 
 [node name="TiempoActual" type="Label" parent="Interfaz"]
@@ -553,18 +555,24 @@ text = "Tiempo"
 
 [node name="speedFactor" type="Panel" parent="Interfaz"]
 anchors_preset = -1
-anchor_left = 0.44
+anchor_left = 0.497
 anchor_top = 0.907
-anchor_right = 0.44
+anchor_right = 0.497
 anchor_bottom = 0.907
-offset_left = -0.703025
+offset_left = -46.303
 offset_top = -0.288052
-offset_right = 89.297
+offset_right = 43.697
 offset_bottom = 39.7119
+pivot_offset = Vector2(45, 20)
 theme_override_styles/panel = SubResource("StyleBoxFlat_mw3uw")
 metadata/_edit_group_ = true
 
-[node name="value" type="RichTextLabel" parent="Interfaz/speedFactor"]
+[node name="cont" type="Control" parent="Interfaz/speedFactor"]
+anchors_preset = 0
+offset_right = 90.0
+offset_bottom = 40.0
+
+[node name="value" type="RichTextLabel" parent="Interfaz/speedFactor/cont"]
 clip_contents = false
 layout_mode = 1
 anchors_preset = -1
@@ -572,8 +580,8 @@ anchor_right = 0.989
 anchor_bottom = 1.0
 offset_left = 0.998016
 offset_top = 7.98395
-offset_right = -0.0120009
-offset_bottom = 7.9839
+offset_right = -0.0120006
+offset_bottom = 7.98389
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 0
 theme_override_constants/shadow_offset_y = 4
@@ -583,7 +591,7 @@ bbcode_enabled = true
 text = "[p align=center][wave amp=60.0 freq=8.0]1.00x[/wave][/p]"
 shortcut_keys_enabled = false
 
-[node name="ProgressBar" type="ProgressBar" parent="Interfaz/speedFactor"]
+[node name="ProgressBar" type="ProgressBar" parent="Interfaz/speedFactor/cont"]
 modulate = Color(0, 1, 0.647059, 1)
 layout_mode = 1
 anchors_preset = 15
@@ -592,19 +600,22 @@ anchor_bottom = 1.0
 offset_left = 0.997986
 offset_top = 33.9322
 offset_right = -1.002
-offset_bottom = -0.0677986
+offset_bottom = -0.0678101
+grow_horizontal = 2
+grow_vertical = 2
 max_value = 10.0
 show_percentage = false
 
 [node name="Perdiste" type="MarginContainer" parent="Interfaz"]
 visible = false
-offset_right = 800.0
-offset_bottom = 600.0
+anchors_preset = -1
+anchor_right = 0.998
+anchor_bottom = 1.0
+offset_right = 1.59998
 theme_override_constants/margin_left = 90
 theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 90
 theme_override_constants/margin_bottom = 50
-metadata/_edit_lock_ = true
 
 [node name="Contenido Juego" type="VBoxContainer" parent="Interfaz/Perdiste"]
 layout_mode = 2
@@ -683,7 +694,7 @@ anchors_preset = -1
 anchor_right = 0.998
 offset_left = 232.0
 offset_top = 700.0
-offset_right = -246.4
+offset_right = 6300.48
 offset_bottom = 834.0
 pivot_offset = Vector2(160, 67)
 theme_override_fonts/normal_font = ExtResource("6_udm3b")
