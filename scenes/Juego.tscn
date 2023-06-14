@@ -436,7 +436,6 @@ process_material = ExtResource("6_fq2id")
 [node name="Camera2D" type="Camera2D" parent="Jugador"]
 position_smoothing_enabled = true
 position_smoothing_speed = 10.0
-metadata/_edit_lock_ = true
 
 [node name="DBGPos" type="Label" parent="Jugador"]
 offset_left = -24.0
@@ -553,21 +552,28 @@ theme_override_font_sizes/font_size = 24
 text = "Tiempo"
 
 [node name="speedFactor" type="Panel" parent="Interfaz"]
-offset_left = 351.297
-offset_top = 543.912
-offset_right = 441.297
-offset_bottom = 583.912
+anchors_preset = -1
+anchor_left = 0.44
+anchor_top = 0.907
+anchor_right = 0.44
+anchor_bottom = 0.907
+offset_left = -0.703025
+offset_top = -0.288052
+offset_right = 89.297
+offset_bottom = 39.7119
 theme_override_styles/panel = SubResource("StyleBoxFlat_mw3uw")
 metadata/_edit_group_ = true
-metadata/_edit_lock_ = true
 
 [node name="value" type="RichTextLabel" parent="Interfaz/speedFactor"]
 clip_contents = false
-layout_mode = 0
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 0.989
+anchor_bottom = 1.0
 offset_left = 0.998016
 offset_top = 7.98395
-offset_right = 88.998
-offset_bottom = 47.9839
+offset_right = -0.0120009
+offset_bottom = 7.9839
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 0
 theme_override_constants/shadow_offset_y = 4
@@ -579,11 +585,14 @@ shortcut_keys_enabled = false
 
 [node name="ProgressBar" type="ProgressBar" parent="Interfaz/speedFactor"]
 modulate = Color(0, 1, 0.647059, 1)
-layout_mode = 0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
 offset_left = 0.997986
 offset_top = 33.9322
-offset_right = 88.998
-offset_bottom = 39.9322
+offset_right = -1.002
+offset_bottom = -0.0677986
 max_value = 10.0
 show_percentage = false
 
@@ -670,9 +679,11 @@ layout_mode = 2
 
 [node name="Listo" type="RichTextLabel" parent="Interfaz"]
 clip_contents = false
+anchors_preset = -1
+anchor_right = 0.998
 offset_left = 232.0
 offset_top = 700.0
-offset_right = 552.0
+offset_right = -246.4
 offset_bottom = 834.0
 pivot_offset = Vector2(160, 67)
 theme_override_fonts/normal_font = ExtResource("6_udm3b")
