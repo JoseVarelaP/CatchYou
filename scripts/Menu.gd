@@ -9,6 +9,7 @@ func _ready():
 	$anims.play("MenuTransitions/transitionIn")
 	get_viewport().connect("size_changed", _on_screen_resized)
 	_on_screen_resized()
+	$Version.set_text( "Version %s" % [GlobalVars.GameVersion] )
 
 func _on_inicio_juego_button_up() -> void:
 	$anims.play("MenuTransitions/transitionOut")
@@ -50,6 +51,10 @@ func _on_screen_resized():
 		windowsize.y*.5 - 300,
 	)
 	$InfoCR.position = Vector2(
-		windowsize.x*.5,
+		windowsize.x - 160,
+		windowsize.y - 40,
+	)
+	$Version.position = Vector2(
+		20,
 		windowsize.y - 40,
 	)

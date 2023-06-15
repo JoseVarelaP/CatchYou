@@ -567,12 +567,7 @@ pivot_offset = Vector2(45, 20)
 theme_override_styles/panel = SubResource("StyleBoxFlat_mw3uw")
 metadata/_edit_group_ = true
 
-[node name="cont" type="Control" parent="Interfaz/speedFactor"]
-anchors_preset = 0
-offset_right = 90.0
-offset_bottom = 40.0
-
-[node name="value" type="RichTextLabel" parent="Interfaz/speedFactor/cont"]
+[node name="value" type="RichTextLabel" parent="Interfaz/speedFactor"]
 clip_contents = false
 layout_mode = 1
 anchors_preset = -1
@@ -580,7 +575,7 @@ anchor_right = 0.989
 anchor_bottom = 1.0
 offset_left = 0.998016
 offset_top = 7.98395
-offset_right = -0.0120006
+offset_right = -0.0120009
 offset_bottom = 7.98389
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
 theme_override_constants/shadow_offset_x = 0
@@ -591,7 +586,7 @@ bbcode_enabled = true
 text = "[p align=center][wave amp=60.0 freq=8.0]1.00x[/wave][/p]"
 shortcut_keys_enabled = false
 
-[node name="ProgressBar" type="ProgressBar" parent="Interfaz/speedFactor/cont"]
+[node name="ProgressBar" type="ProgressBar" parent="Interfaz/speedFactor"]
 modulate = Color(0, 1, 0.647059, 1)
 layout_mode = 1
 anchors_preset = 15
@@ -600,7 +595,7 @@ anchor_bottom = 1.0
 offset_left = 0.997986
 offset_top = 33.9322
 offset_right = -1.002
-offset_bottom = -0.0678101
+offset_bottom = -0.0678215
 grow_horizontal = 2
 grow_vertical = 2
 max_value = 10.0
@@ -694,7 +689,7 @@ anchors_preset = -1
 anchor_right = 0.998
 offset_left = 232.0
 offset_top = 700.0
-offset_right = 6300.48
+offset_right = 7098.88
 offset_bottom = 834.0
 pivot_offset = Vector2(160, 67)
 theme_override_fonts/normal_font = ExtResource("6_udm3b")

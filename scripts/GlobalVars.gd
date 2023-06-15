@@ -6,6 +6,8 @@ extends Node
 
 @export var int_mapTile: TileMap
 
+const GameVersion: String = "1.1"
+
 const PossibleLookoutLocations = [
 	Vector2i.LEFT,
 	#Vector2i(-1,-1),

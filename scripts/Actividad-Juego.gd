@@ -11,8 +11,8 @@ extends Node2D
 @onready var LvUpSound = $levelUp
 @onready var animPlayer = $AnimationPlayer
 @onready var tiempoLabel = $Interfaz/TiempoActual
-@onready var speedCont = $Interfaz/speedFactor/cont
-@onready var speedLabel = $Interfaz/speedFactor/cont/value
+@onready var speedCont = $Interfaz/speedFactor
+@onready var speedLabel = $Interfaz/speedFactor/value
 @onready var rand = RandomNumberGenerator.new()
 @onready var enemies = get_tree().get_nodes_in_group("enemy")
 
@@ -39,6 +39,7 @@ var UltimoTiempo: float = 0.0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	get_viewport().connect("size_changed", _on_screen_resized)
 	set_process(true)
 	GlobalVars.curPlayerPosition = $Jugador.global_position
 	GlobalVars.curPlayerTransform = $Jugador.transform
@@ -56,6 +57,7 @@ func _ready() -> void:
 	enemies[3].position = Vector2(100,500)
 	
 	$Jugador.setAllowedToMove(false)
+	_on_screen_resized()
 	
 	await get_tree().create_timer(0.2).timeout
 	
@@ -132,11 +134,11 @@ func _process(delta: float) -> void:
 	if( curShakeStrength > 0.0 ):
 		curShakeStrength = lerp(curShakeStrength, 0.0, ShakeDecay * delta)
 		camera.offset = getRandomCameraOffset()
-		speedCont.position = getRandomCameraOffset()
+		speedCont.position = ogSpeedLabelPos + getRandomCameraOffset()
 	
 	if( curRhythmStrength > 0.0 ):
 		curRhythmStrength = lerp(curRhythmStrength, 0.0, ShakeDecay * delta)
-		speedCont.position = ogSpeedLabelPos + Vector2(0, -curRhythmStrength)
+		speedCont.position += Vector2(0, -curRhythmStrength)
 		
 		var cmlPlayerzoom = clampf(curRhythmStrength/10, 0.4, 0.44)
 		$Jugador/CollisionShape2D/ActorJug.set_scale( Vector2( cmlPlayerzoom, cmlPlayerzoom) )
@@ -150,7 +152,7 @@ func _process(delta: float) -> void:
 	#GlobalVars.areaForPlayer += Vector2(delta * 3.0, delta * 3.0)
 	#$ReferenceRect.set_size( GlobalVars.areaForPlayer )
 	var pos = getPlayerTilePosition()
-	$Interfaz/speedFactor/cont/ProgressBar.set_value( abs(10 - skillTimer.time_left) )
+	$Interfaz/speedFactor/ProgressBar.set_value( abs(10 - skillTimer.time_left) )
 	$Jugador/DBGPos.set_text( "%d,%d" % [pos.x,pos.y] )
 		
 	# Suma el tiempo actual a lo que esta.
@@ -214,3 +216,12 @@ func _CrossedBeat():
 func _on_jugador_boost_status_changed(status):
 	if status:
 		applyShake( 10 )
+
+func _on_screen_resized():
+	var windowsize: Vector2 = get_viewport_rect().size
+	var newSpeedPos = Vector2(
+		windowsize.x*.5 - 45,
+		windowsize.y - 50
+	)
+	ogSpeedLabelPos = newSpeedPos
+	speedCont.position = newSpeedPos
